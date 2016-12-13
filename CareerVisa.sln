@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.25928.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerVisa", "MVCTutorial\CareerVisa.csproj", "{64EB131D-10D2-42E9-A60C-7844EA48DE67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerVisa", "CareerVisa\CareerVisa.csproj", "{64EB131D-10D2-42E9-A60C-7844EA48DE67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
