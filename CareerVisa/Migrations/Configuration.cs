@@ -1,19 +1,19 @@
-namespace MVCTutorial.Migrations
+namespace CareerVisa.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MVCTutorial.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CareerVisa.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "MVCTutorial.Models.ApplicationDbContext";
+            ContextKey = "CareerVisa.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(MVCTutorial.Models.ApplicationDbContext context)
+        protected override void Seed(CareerVisa.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

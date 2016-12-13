@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace MVCTutorial.Models
+namespace CareerVisa.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

@@ -1,4 +1,4 @@
-namespace MVCTutorial.Migrations
+namespace CareerVisa.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using MVCTutorial.Models;
+using CareerVisa.Models;
 
-namespace MVCTutorial
+namespace CareerVisa
 {
     public class EmailService : IIdentityMessageService
     {

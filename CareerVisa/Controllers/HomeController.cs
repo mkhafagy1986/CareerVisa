@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MVCTutorial.Models;
+using CareerVisa.Models;
 
-namespace MVCTutorial.Controllers
+namespace CareerVisa.Controllers
 {
     public class HomeController : Controller
     {

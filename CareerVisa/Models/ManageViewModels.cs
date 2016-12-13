@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace MVCTutorial.Models
+namespace CareerVisa.Models
 {
     public class IndexViewModel
     {

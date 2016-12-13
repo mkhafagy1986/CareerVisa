@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using MVCTutorial.Models;
+using CareerVisa.Models;
 
-namespace MVCTutorial.Controllers
+namespace CareerVisa.Controllers
 {
     [Authorize]
     public class ManageController : Controller

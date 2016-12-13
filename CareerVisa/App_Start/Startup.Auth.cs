@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using MVCTutorial.Models;
+using CareerVisa.Models;
 
-namespace MVCTutorial
+namespace CareerVisa
 {
     public partial class Startup
     {

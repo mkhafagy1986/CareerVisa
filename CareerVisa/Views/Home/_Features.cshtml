@@ -1,4 +1,4 @@
-﻿@model List<MVCTutorial.Models.Feature>
+﻿@model List<CareerVisa.Models.Feature>
 
     
     <div class="container text-center">
@@ -6,7 +6,7 @@
             <h1 class="title-small wow tada" >Why Career Visa?</h1>
             <h2 class="subtitle-small wow fadeInLeft" data-wow-delay=".5s">Lorem Ipsum is simply dummy text</h2>
 
-            @foreach (MVCTutorial.Models.Feature item in Model)
+            @foreach (CareerVisa.Models.Feature item in Model)
             {
                 <div class="col-lg-@Math.Floor(double.Parse((12/Model.Count).ToString())) col-md-@Math.Floor(double.Parse((12/Model.Count).ToString())) col-sm-@Math.Floor(double.Parse((12/Model.Count).ToString()))    col-xs-12 wow fadeInUp" data-wow-delay=".5s">
                     <div class="feature-item">

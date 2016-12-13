@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(MVCTutorial.Startup))]
-namespace MVCTutorial
+[assembly: OwinStartupAttribute(typeof(CareerVisa.Startup))]
+namespace CareerVisa
 {
     public partial class Startup
     {

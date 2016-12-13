@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MVCTutorial.Models
+namespace CareerVisa.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

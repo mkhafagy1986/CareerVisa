@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace MVCTutorial
+namespace CareerVisa
 {
     public class FilterConfig
     {
