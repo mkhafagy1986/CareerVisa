@@ -1,0 +1,57 @@
+﻿@model MVCTutorial.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<section id="sign-up-area">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="title-big wow fadeIn">Join Us Today!</h1>
+                <h2 class="subtitle-big">Enjoy our Awesomeness</h2>
+            </div>
+
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger  subtitle-small" })
+            <div class="col-md-12 text-center">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "sign-up-form", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "signupemail", placeholder = "Enter email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        @*<input type="email" class="form-control" id="signupemail" placeholder="Enter email">*@
+                    </div>
+                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown" data-wow-delay=".7s">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "signuppassword", placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        @* <input type="password" class="form-control" id="signuppassword" placeholder="Password">*@
+
+                    </div>
+                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown" data-wow-delay=".7s">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", id = "confirmpassword", placeholder = "Confirm Password" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", id = "signupemail", placeholder = "Enter First name" })
+                        @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
+                        @*<input type="email" class="form-control" id="signupemail" placeholder="Enter email">*@
+                    </div>
+                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown">
+                        @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control", id = "signupemail", placeholder = "Enter Last Name" })
+                        @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
+
+                        <input type="submit" class="sign-up-button btn btn-border btn-lg col-md-offset-3 col-md-6 col-md-offset-3 wow fadeInUp" data-wow-delay="1s" value="Sign Up" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

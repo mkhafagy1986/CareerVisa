@@ -1,0 +1,42 @@
+﻿@model MVCTutorial.Models.Functionality
+
+@{
+    ViewBag.Title = "Functionality";
+}
+
+<h2>Functionality Details</h2>
+
+<div>
+    <h4>Functionality Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FunctionalityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FunctionalityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FunctionalityDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FunctionalityDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FunctionalityImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FunctionalityImagePath)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FunctionalityId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,58 @@
+﻿
+@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+
+<div class="collapse navbar-collapse" id="navbar">
+    @{ string url = "";}
+    <ul class="nav navbar-nav pull-right">
+        @{ url = Url.Action("Index", "Home"); }
+        <li id="Home" class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        @{
+            url = Url.Action("About", "Home");
+        }
+        <li id="About" class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+            @Html.ActionLink("About Career Visa", "About", "Home")
+        </li>
+
+        @if (Request.IsAuthenticated)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var name = identity.FindFirstValue(ClaimTypes.GivenName) ?? identity.GetUserName();
+
+            { url = Url.Action("Index", "Features"); }
+            <li id="Features" class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                @Html.ActionLink("Features", "Index", "Features")
+            </li>
+
+            @Html.AntiForgeryToken()
+
+            { url = Url.Action("Index", "Manage"); }
+            <li id="UserName" class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                @Html.ActionLink("Hello " + name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            { url = Url.Action("LogOff", "Account"); }
+            <li id="LogOut" class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                @Html.ActionLink("Log off", "LogOff", "Account")
+                @*<a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>*@
+            </li>
+        }
+        else
+        {
+            { url = Url.Action("Why", "Home"); }
+            <li id="Why" class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                @Html.ActionLink("Why Career Visa", "Why", "Home")
+            </li>
+
+            { url = Url.Action("Login", "Account"); }
+            <li id="AccountSignIn" class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                @Html.ActionLink("Sign In", "Login", "Account")
+            </li>
+            { url = Url.Action("Register", "Account"); }
+            <li id="AccountSignUp" class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                @Html.ActionLink("Sign Up", "Register", "Account")
+            </li>
+        }
+    </ul>
+</div>

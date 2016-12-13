@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Career Visa</title>
+
+    <!-- jQuery Load -->
+    <script src="~/Scripts/jquery-min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+          <![endif]-->
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <!-- Nav Menu Section -->
+    <div class="logo-menu">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header col-md-3">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Career Visa", "Index", "Home", new { @class = "navbar-brand fa fa-fa fa-cubes" })
+                </div>
+
+                @Html.Partial("_menu");
+            </div>
+        </nav>
+    </div>
+    <!-- Nav Menu Section End -->
+
+    @RenderBody()
+
+    <!-- Footer Section Start -->
+    <section id="bottom">
+        <div class="container">
+            @Html.Partial("_footer")
+        </div>
+    </section>
+    <!-- Footer Section End -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/scripts")
+    @RenderSection("scripts", required: false)
+
+<div class="modal"><!-- Place at bottom of page --></div>
+<script type="text/javascript">
+    $body = $("body");
+
+    $(document).on({
+        ajaxStart: function () { $body.addClass("loading"); },
+        ajaxStop: function () { $body.removeClass("loading"); }
+    });
+</script>
+</body>
+</html>

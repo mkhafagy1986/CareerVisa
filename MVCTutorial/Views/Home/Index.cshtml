@@ -1,0 +1,145 @@
+﻿@model MVCTutorial.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<section id="hero-area">
+    <div class="hero-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="title-big">Career Visa - Free Bootstrap App Theme</h1>
+                    <h2 class="subtitle-big">Lorem Ipsum is simply dummy text of the printing and typesetting.</h2>
+                </div>
+                <div class="col-md-12 text-center">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "sign-up-form", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "signupemail", placeholder = "Enter email" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                            <input type="submit" class="sign-up-button btn btn-border btn-lg col-md-offset-3 col-md-6 col-md-offset-3 wow fadeInUp" data-wow-delay="1s" value="Sign Up Now!" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hero Area Section End-->
+<!-- feature Section -->
+<section id="key-features">
+    <div class="se-pre-con"></div>
+</section>
+<!-- feature Section End -->
+<!-- feature Section Start -->
+<section id="features">
+    <div class="container">
+        <div class="row">
+            <h1 class="title-small wow tada">There is an App for that</h1>
+            <div class="col-md-12 text-center">
+                <a class="btn btn-border btn-lg wow fadeInLeft animated" data-wow-offset="10" href="#"><i class="fa fa-android"></i> Android</a>
+                <a class="btn btn-border btn-lg wow fadeInRight animated" data-wow-offset="10" href="#"><i class="fa fa-apple"></i>iPhone</a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="content-left text-right wow fadeInLeft animated" data-wow-offset="10">
+                    <div class="box-item left">
+                        <span class="icon">
+                            <i class="fa fa-heart-o"></i>
+                        </span>
+                        <div class="text">
+                            <h4>Bootstrap 3 Based</h4>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+                    </div>
+                    <div class="box-item left">
+                        <span class="icon">
+                            <i class="fa fa-file-text-o"></i>
+                        </span>
+                        <div class="text">
+                            <h4>Fully Responsive</h4>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+                    </div>
+                    <div class="box-item left">
+                        <span class="icon">
+                            <i class="fa fa-folder-open"></i>
+                        </span>
+                        <div class="text">
+                            <h4>HTML5 & CSS3</h4>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="show-box wow fadeInDown animated" data-wow-offset="10">
+                    <img src="~/images/features/iPhone.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="content-right text-left wow fadeInRight animated" data-wow-offset="10">
+                    <div class="box-item right">
+                        <span class="icon">
+                            <i class="fa fa-power-off"></i>
+                        </span>
+                        <div class="text">
+                            <h4>FontAwesome</h4>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                        </div>
+                    </div>
+                    <div class="box-item right">
+                        <span class="icon">
+                            <i class="fa fa-check"></i>
+                        </span>
+                        <div class="text">
+                            <h4>Amazing Animations</h4>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+                    </div>
+                    <div class="box-item right">
+                        <span class="icon">
+                            <i class="fa fa-lightbulb-o"></i>
+                        </span>
+                        <div class="text">
+                            <h4>Clean & Simple</h4>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Features Section Start -->
+<!-- feature-list Section -->
+<section id="main-features">
+    <div class="se-pre-con"></div>
+</section>
+<!-- feature-list Section End -->
+
+<script>
+    $.ajax({
+        // Get Student PartialView
+        url: "/Home/Features",
+        type: 'Get',
+        data: null,
+        success: function (data) {
+            $("#key-features").empty().append(data);
+            new WOW().init();
+        },
+        error: function () {
+            alert("something seems wrong");
+        }
+    });
+
+    $(function() {
+        $.get("/Home/Functionality", null, function (data) {
+            $("#main-features").empty().append(data);
+            new WOW().init();
+
+        });
+    });
+</script>
