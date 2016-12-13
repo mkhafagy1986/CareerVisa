@@ -9,7 +9,8 @@ namespace CareerVisa
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.backstretch.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -23,7 +24,9 @@ namespace CareerVisa
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/wow.js",
-                      "~/Scripts/main.js"));
+                      "~/Scripts/main.js",
+                      "~/Scripts/scripts.js",
+                      "~/Scripts/gridmvc.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -31,7 +34,11 @@ namespace CareerVisa
                       "~/Content/main.css",
                       "~/responsive.css",
                       "~/fonts/font-awesome/font-awesome.min.css",
-                      "~/Content/extras/animate.css"));
+                      "~/Content/extras/animate.css",
+                      "~/Content/style.css",
+                      "~/Content/form-elements.css",
+                      "~/font-awesome/css/font-awesome.min.css",
+                      "~/Content/Gridmvc.css"));
         }
     }
 }

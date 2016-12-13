@@ -1,57 +1,134 @@
-﻿@model CareerVisa.Models.RegisterViewModel
-@{
-    ViewBag.Title = "Register";
-}
+﻿ <!-- Top content -->
+<div class="top-content">
 
-<section id="sign-up-area">
+    <div class="inner-bg">
+        <div class="container">
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="title-big wow fadeIn">Join Us Today!</h1>
-                <h2 class="subtitle-big">Enjoy our Awesomeness</h2>
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 text">
+                    <h1><strong>Bootstrap</strong> Login &amp; Register Forms</h1>
+                    <div class="description">
+                        <p>
+                            This is a free responsive <strong>"login and register forms"</strong> template made with Bootstrap.
+                            Download it on <a href="http://azmind.com" target="_blank"><strong>AZMIND</strong></a>,
+                            customize and use it as you like!
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <hr />
-            @Html.ValidationSummary("", new { @class = "text-danger  subtitle-small" })
-            <div class="col-md-12 text-center">
-                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "sign-up-form", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "signupemail", placeholder = "Enter email" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        @*<input type="email" class="form-control" id="signupemail" placeholder="Enter email">*@
-                    </div>
-                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown" data-wow-delay=".7s">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "signuppassword", placeholder = "Password" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        @* <input type="password" class="form-control" id="signuppassword" placeholder="Password">*@
+            <div class="row">
+                <div class="col-sm-5">
 
-                    </div>
-                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown" data-wow-delay=".7s">
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", id = "confirmpassword", placeholder = "Confirm Password" })
-                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    <div class="form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Employeer Registration</h3>
+                                <p>Enter your information as an employeer:</p>
+                            </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                        </div>
+                        <div class="form-bottom">
+                            <form role="form" action="" method="post" class="login-form">
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-company-name">Company Name</label>
+                                    <input type="text" name="companyname" placeholder="First name..." class="form-first-name form-control" id="form-company-first-name">
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-email">Company Email</label>
+                                    <input type="text" name="companyemail" placeholder="Company Email..." class="form-company-email form-control" id="form-company-email">
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-company-password">Enter Password</label>
+                                    <input type="password" name="companypassword" placeholder="Enter Password" class="form-password form-control" id="form-company-password">
+
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-company-confirm-Password">Confirm Password</label>
+                                    <input type="password" name="companyConfirmpassword" placeholder="Confirm Password" class="form-password form-control" id="form-company-Confirmpassword">
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-company-phone">Company Phone</label>
+                                    <input type="text" name="company-phone" placeholder="Phone Number" class="form-phone form-control" id="form-company-phone   ">
+                                </div>
+                                <button type="submit" class="btn  wow fadeInUp">Register Employeer</button>
+                            </form>
+                        </div>
                     </div>
 
-                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown">
-                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", id = "signupemail", placeholder = "Enter First name" })
-                        @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
-                        @*<input type="email" class="form-control" id="signupemail" placeholder="Enter email">*@
-                    </div>
-                    <div class="form-group col-md-offset-4 col-md-4 col-md-offset-4 wow fadeInDown">
-                        @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control", id = "signupemail", placeholder = "Enter Last Name" })
-                        @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
+                    
+                </div>
 
-                        <input type="submit" class="sign-up-button btn btn-border btn-lg col-md-offset-3 col-md-6 col-md-offset-3 wow fadeInUp" data-wow-delay="1s" value="Sign Up" />
+                <div class="col-sm-1 middle-border"></div>
+                <div class="col-sm-1"></div>
+
+                <div class="col-sm-5">
+
+                    <div class="form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Job Seeker Registration</h3>
+                                <p>Enter your information as a job seeker</p>
+                            </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                        <div class="form-bottom">
+                            <form role="form" action="" method="post" class="registration-form">
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-first-name">First name</label>
+                                    <input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-last-name">Last name</label>
+                                    <input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-email">Email</label>
+                                    <input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-password">Enter Password</label>
+                                    <input type="password" name="password" placeholder="Enter Password" class="form-password form-control" id="form-password">
+
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-Password">Confirm Password</label>
+                                    <input type="password" name="Confirmpassword" placeholder="Confirm Password" class="form-password form-control" id="form-Confirmpassword">
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-phone">Phone Number</label>
+                                    <input type="text" name="phone" placeholder="Phone Number" class="form-phone form-control" id="form-phone   ">
+                                </div>
+                                <button type="submit" class="btn wow fadeInUp">Register job seeker</button>
+                            </form>
+                        </div>
                     </div>
-                }
+
+                </div>
             </div>
+
         </div>
     </div>
-    </div>
-</section>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</div>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="footer-border"></div>
+                <p>
+                    Made by Anli Zaimi at <a href="http://azmind.com" target="_blank"><strong>AZMIND</strong></a>
+                    having a lot of fun. <i class="fa fa-smile-o"></i>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
