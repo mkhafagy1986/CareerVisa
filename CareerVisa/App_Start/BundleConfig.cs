@@ -26,7 +26,12 @@ namespace CareerVisa
                       "~/Scripts/wow.js",
                       "~/Scripts/main.js",
                       "~/Scripts/scripts.js",
-                      "~/Scripts/gridmvc.min.js"));
+                      "~/Scripts/gridmvc.min.js",
+                      "~/Scripts/jquery.js",
+                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/plugins/morris/raphael.min.js",
+                      "~/Scripts/plugins/morris/morris.min.js",
+                      "~/Scripts/plugins/morris/morris-data.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -38,7 +43,10 @@ namespace CareerVisa
                       "~/Content/style.css",
                       "~/Content/form-elements.css",
                       "~/font-awesome/css/font-awesome.min.css",
-                      "~/Content/Gridmvc.css"));
+                      "~/Content/Gridmvc.css",
+                      "~/Content/sb-admin.css",
+                      "~/Content/morris.css",
+                      "~/font-awesome/css/font-awesome.min.css"));
         }
     }
 }
