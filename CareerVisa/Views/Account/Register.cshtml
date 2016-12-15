@@ -1,7 +1,8 @@
-﻿@section RegistrationcssBundle{
+﻿@model CareerVisa.Models.RegisterationViewModel
+@section RegistrationcssBundle{
     @Styles.Render("~/Content/cssRegistration")
 }
- <!-- Top content -->
+<!-- Top content -->
 <div class="top-content">
 
     <div class="inner-bg">
@@ -26,7 +27,7 @@
                     <div class="form-box">
                         <div class="form-top">
                             <div class="form-top-left">
-                                <h3>Employeer Registration</h3>
+                                <h3>Employer Registration</h3>
                                 <p>Enter your information as an employeer:</p>
                             </div>
                             <div class="form-top-right">
@@ -35,33 +36,39 @@
                         </div>
                         <div class="form-bottom">
                             <form role="form" action="" method="post" class="login-form">
-                                <div class="form-group wow fadeInDown animated">
-                                    <label class="sr-only" for="form-company-name">Company Name</label>
-                                    <input type="text" name="companyname" placeholder="First name..." class="form-first-name form-control" id="form-company-first-name">
-                                </div>
-                                <div class="form-group wow fadeInDown animated">
-                                    <label class="sr-only" for="form-email">Company Email</label>
-                                    <input type="text" name="companyemail" placeholder="Company Email..." class="form-company-email form-control" id="form-company-email">
-                                </div>
-                                <div class="form-group wow fadeInDown animated">
-                                    <label class="sr-only" for="form-company-password">Enter Password</label>
-                                    <input type="password" name="companypassword" placeholder="Enter Password" class="form-password form-control" id="form-company-password">
+                                @using (Html.BeginForm("RegisterEmployer", "Account", FormMethod.Post, new { @class = "ogin-form", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-group wow fadeInDown animated">
+                                        <label class="sr-only" for="form-company-name">Company Name</label>
+                                        @Html.TextBoxFor(m => m.Employer.Name, new { @class = "form-first-name form-control", id = "employername", placeholder = "Employer name..."})
+                                        @Html.ValidationMessageFor(m => m.Employer.Name, "", new { @class = "text-danger" })
+                                        @*<input type="text" name="companyname" required="required" placeholder="Employer name..." class="form-first-name form-control" id="form-company-first-name">*@
+                                    </div>
+                                    <div class="form-group wow fadeInDown animated">
+                                        <label class="sr-only" for="form-email">Company Email</label>
+                                        <input type="text" name="companyemail" data-validation="email" placeholder="Employer Email..." class="form-company-email form-control" id="form-company-email">
+                                    </div>
+                                    <div class="form-group wow fadeInDown animated">
+                                        <label class="sr-only" for="form-company-password">Enter Password</label>
+                                        <input type="password" name="companypassword" placeholder="Enter Password" class="form-password form-control" id="form-company-password">
 
-                                </div>
-                                <div class="form-group wow fadeInDown animated">
-                                    <label class="sr-only" for="form-company-confirm-Password">Confirm Password</label>
-                                    <input type="password" name="companyConfirmpassword" placeholder="Confirm Password" class="form-password form-control" id="form-company-Confirmpassword">
-                                </div>
-                                <div class="form-group wow fadeInDown animated">
-                                    <label class="sr-only" for="form-company-phone">Company Phone</label>
-                                    <input type="text" name="company-phone" placeholder="Phone Number" class="form-phone form-control" id="form-company-phone   ">
-                                </div>
-                                <button type="submit" class="btn  wow fadeInUp">Register Employeer</button>
+                                    </div>
+                                    <div class="form-group wow fadeInDown animated">
+                                        <label class="sr-only" for="form-company-confirm-Password">Confirm Password</label>
+                                        <input type="password" name="companyConfirmpassword" data-validate-linked="companypassword" placeholder="Confirm Password" class="form-password form-control" id="form-company-Confirmpassword">
+                                    </div>
+                                    <div class="form-group wow fadeInDown animated">
+                                        <label class="sr-only" for="form-company-phone">Company Phone</label>
+                                        <input type="text" name="company-phone" placeholder="Phone Number" class="form-phone form-control" id="form-company-phone   ">
+                                    </div>
+                                    <button type="submit" class="btn  wow fadeInUp">Register Employeer</button>
+                                }
                             </form>
                         </div>
                     </div>
 
-                    
+
                 </div>
 
                 <div class="col-sm-1 middle-border"></div>
