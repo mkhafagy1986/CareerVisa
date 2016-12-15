@@ -1,5 +1,7 @@
 ﻿@model List<CareerVisa.Models.Functionality>
-
+@section DefaultcssBundle{
+    @Styles.Render("~/Content/css")
+}
 @{ int index = 0; }
 @foreach (CareerVisa.Models.Functionality item in Model)
 {
@@ -7,7 +9,7 @@
 
     if ((index % 2) == 0)
     {
-        <div id="feature-list-item-@item.FunctionalityId" class ="feature-list-item-bg">
+        <div id="feature-list-item-@item.FunctionalityId" class="feature-list-item-bg">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -44,4 +46,7 @@
         </div>
     }
 
+}
+@section DefaultscriptBundle{
+    @Scripts.Render("~/bundles/scripts")
 }

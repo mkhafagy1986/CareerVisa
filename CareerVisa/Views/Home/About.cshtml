@@ -1,7 +1,11 @@
-﻿
+﻿@section DefaultcssBundle{
+    @Styles.Render("~/Content/css")
+}
 @{
     ViewBag.Title = "About";
 }
 
 <h2>About</h2>
-
+@section DefaultscriptBundle{
+    @Scripts.Render("~/bundles/scripts")
+}

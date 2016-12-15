@@ -1,5 +1,7 @@
 ﻿@model CareerVisa.Models.Functionality
-
+@section DefaultcssBundle{
+    @Styles.Render("~/Content/css")
+}
 @{
     ViewBag.Title = "Functionality";
 }
@@ -40,3 +42,6 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.FunctionalityId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+@section DefaultscriptBundle{
+    @Scripts.Render("~/bundles/scripts")
+}

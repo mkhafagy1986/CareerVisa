@@ -1,4 +1,8 @@
 ﻿@model CareerVisa.Models.RegisterViewModel
+
+@section DefaultcssBundle{
+    @Styles.Render("~/Content/css")
+}
 @{
     ViewBag.Title = "Home Page";
 }
@@ -143,3 +147,6 @@
         });
     });
 </script>
+@section DefaultscriptBundle{
+    @Scripts.Render("~/bundles/scripts")
+}
