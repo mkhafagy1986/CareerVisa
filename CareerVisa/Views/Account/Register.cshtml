@@ -20,7 +20,9 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                @Html.ValidationSummary("", new { @class = "alert alert-info alert-dismissable", style = "text-align:left !important;" })
+            </div>
             <div class="row">
                 <div class="col-sm-5">
 
@@ -35,36 +37,45 @@
                             </div>
                         </div>
                         <div class="form-bottom">
-                            <form role="form" action="" method="post" class="login-form">
-                                @using (Html.BeginForm("RegisterEmployer", "Account", FormMethod.Post, new { @class = "ogin-form", role = "form" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <div class="form-group wow fadeInDown animated">
-                                        <label class="sr-only" for="form-company-name">Company Name</label>
-                                        @Html.TextBoxFor(m => m.Employer.Name, new { @class = "form-first-name form-control", id = "employername", placeholder = "Employer name..."})
-                                        @Html.ValidationMessageFor(m => m.Employer.Name, "", new { @class = "text-danger" })
-                                        @*<input type="text" name="companyname" required="required" placeholder="Employer name..." class="form-first-name form-control" id="form-company-first-name">*@
-                                    </div>
-                                    <div class="form-group wow fadeInDown animated">
-                                        <label class="sr-only" for="form-email">Company Email</label>
-                                        <input type="text" name="companyemail" data-validation="email" placeholder="Employer Email..." class="form-company-email form-control" id="form-company-email">
-                                    </div>
-                                    <div class="form-group wow fadeInDown animated">
-                                        <label class="sr-only" for="form-company-password">Enter Password</label>
-                                        <input type="password" name="companypassword" placeholder="Enter Password" class="form-password form-control" id="form-company-password">
+                            @*<form role="form" action="" method="post" class="login-form">*@
+                            @using (Html.BeginForm("RegisterEmployer", "Account", FormMethod.Post, new { @class = "login-form", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-first-name">Company Name</label>
+                                    @Html.TextBoxFor(m => m.Employer.Name, new { @class = "form-first-name form-control", id = "employername", placeholder = "Employer name...", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Employer.Name, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="text" name="companyname" required="required" placeholder="Employer name..." class="form-first-name form-control" id="form-company-first-name">*@
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-email">Company Email</label>
+                                    @Html.TextBoxFor(m => m.Employer.Email, new { @class = "form-email form-control", id = "employeremail", placeholder = "Employer Email...", required = "required", data_Validation = "email" })
+                                    @Html.ValidationMessageFor(m => m.Employer.Email, "", new { @class = "text-danger", style = "color:#fff" })
 
-                                    </div>
+                                    @*<input type="text" name="companyemail" data-validation="email" placeholder="Employer Email..." class="form-company-email form-control" id="form-company-email">*@
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-password">Enter Password</label>
+                                    @Html.PasswordFor(m => m.Employer.Password, new { @class = "form-password form-control", id = "employerpassword", placeholder = "Enter Password", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Employer.Password, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="password" name="companypassword" placeholder="Enter Password" class="form-password form-control" id="form-company-password">*@
+
+                                </div>
+                                <div class="form-group wow fadeInDown animated">
+                                    <label class="sr-only" for="form-password">Confirm Password</label>
+                                    @Html.PasswordFor(m => m.Employer.ConfirmPassword, new { @class = "form-password form-control", id = "employerconfirmpassword", placeholder = "Confirm Password", required = "required", data_validate_linked = "companypassword" })
+                                    @Html.ValidationMessageFor(m => m.Employer.ConfirmPassword, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="password" name="companyConfirmpassword" data-validate-linked="companypassword" placeholder="Confirm Password" class="form-password form-control" id="form-company-Confirmpassword">*@
+                                </div>
                                     <div class="form-group wow fadeInDown animated">
-                                        <label class="sr-only" for="form-company-confirm-Password">Confirm Password</label>
-                                        <input type="password" name="companyConfirmpassword" data-validate-linked="companypassword" placeholder="Confirm Password" class="form-password form-control" id="form-company-Confirmpassword">
+                                        <label class="sr-only" for="form-phone">Company Phone</label>
+                                        @Html.TextBoxFor(m => m.Employer.PhoneNumber, new { @class = "form-phone form-control", id = "employerphonenumber", placeholder = "Phone Number", required = "required" })
+                                        @Html.ValidationMessageFor(m => m.Employer.PhoneNumber, "", new { @class = "text-danger", style = "color:#fff" })
+                                        @*<input type="text" name="company-phone" placeholder="Phone Number" class="form-phone form-control" id="form-company-phone   ">*@
                                     </div>
-                                    <div class="form-group wow fadeInDown animated">
-                                        <label class="sr-only" for="form-company-phone">Company Phone</label>
-                                        <input type="text" name="company-phone" placeholder="Phone Number" class="form-phone form-control" id="form-company-phone   ">
-                                    </div>
-                                    <button type="submit" class="btn  wow fadeInUp">Register Employeer</button>
-                                }
-                            </form>
+                                    <button type="submit" class="btn  wow fadeInUp" data-wow-delay="1s">Register Employeer</button>
+                            }
+                            @*</form>*@
                         </div>
                     </div>
 
@@ -87,34 +98,50 @@
                             </div>
                         </div>
                         <div class="form-bottom">
-                            <form role="form" action="" method="post" class="registration-form">
+                            @*<form role="form" action="" method="post" class="registration-form">*@
+                            @using (Html.BeginForm("RegisterJobseeker", "Account", FormMethod.Post, new { @class = "login-form", role = "form" }))
+            {
+                                @Html.AntiForgeryToken()
                                 <div class="form-group wow fadeInDown animated">
                                     <label class="sr-only" for="form-first-name">First name</label>
-                                    <input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
+                                    @Html.TextBoxFor(m => m.JobSeeker.FirstName, new { @class = "form-first-name form-control", id = "jobseekerfirstname", placeholder = "First name...", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.JobSeeker.FirstName, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">*@
                                 </div>
                                 <div class="form-group wow fadeInDown animated">
                                     <label class="sr-only" for="form-last-name">Last name</label>
-                                    <input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
+                                    @Html.TextBoxFor(m => m.JobSeeker.LastName, new { @class = "form-first-name form-control", id = "jobseekerlastname", placeholder = "Last name...", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.JobSeeker.LastName, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">*@
                                 </div>
                                 <div class="form-group wow fadeInDown animated">
                                     <label class="sr-only" for="form-email">Email</label>
-                                    <input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
+                                    @Html.TextBoxFor(m => m.JobSeeker.Email, new { @class = "form-email form-control", id = "jobseekeremailname", placeholder = "Email...", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.JobSeeker.Email, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">*@
                                 </div>
                                 <div class="form-group wow fadeInDown animated">
                                     <label class="sr-only" for="form-password">Enter Password</label>
-                                    <input type="password" name="password" placeholder="Enter Password" class="form-password form-control" id="form-password">
+                                    @Html.PasswordFor(m => m.JobSeeker.Password, new { @class = "form-password form-control", id = "jobseekerpasswordname", placeholder = "Enter Password", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.JobSeeker.Password, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="password" name="password" placeholder="Enter Password" class="form-password form-control" id="form-password">*@
 
                                 </div>
                                 <div class="form-group wow fadeInDown animated">
                                     <label class="sr-only" for="form-Password">Confirm Password</label>
-                                    <input type="password" name="Confirmpassword" placeholder="Confirm Password" class="form-password form-control" id="form-Confirmpassword">
+                                    @Html.PasswordFor(m => m.JobSeeker.ConfirmPassword, new { @class = "form-password form-control", id = "jobseekerconfirmpasswordname", placeholder = "Confirm Password", required = "required", data_validate_linked = "companypassword" })
+                                    @Html.ValidationMessageFor(m => m.JobSeeker.ConfirmPassword, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="password" name="Confirmpassword" placeholder="Confirm Password" class="form-password form-control" id="form-Confirmpassword">*@
                                 </div>
                                 <div class="form-group wow fadeInDown animated">
                                     <label class="sr-only" for="form-phone">Phone Number</label>
-                                    <input type="text" name="phone" placeholder="Phone Number" class="form-phone form-control" id="form-phone   ">
+                                    @Html.TextBoxFor(m => m.JobSeeker.PhoneNumber, new { @class = "form-phone form-control", id = "jobseekerphonenumber", placeholder = "Phone Number", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.JobSeeker.PhoneNumber, "", new { @class = "text-danger", style = "color:#fff" })
+                                    @*<input type="text" name="phone" placeholder="Phone Number" class="form-phone form-control" id="form-phone   ">*@
                                 </div>
-                                <button type="submit" class="btn wow fadeInUp">Register job seeker</button>
-                            </form>
+                                <button type="submit" class="btn wow fadeInUp" data-wow-delay="1s">Register job seeker</button>
+                            }
+                            @*</form>*@
                         </div>
                     </div>
 
