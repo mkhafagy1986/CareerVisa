@@ -75,7 +75,8 @@ namespace CareerVisa
                       "~/Content/bootstrap.min.css",
                       "~/Content/sb-admin.css",
                       "~/Content/morris.css",
-                      "~/font-awesome/css/font-awesome.min.css"));
+                      "~/font-awesome/css/font-awesome.min.css",
+                      "~/Content/custom.min.css"));
         }
     }
 }

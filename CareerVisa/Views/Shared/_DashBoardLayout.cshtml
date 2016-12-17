@@ -146,9 +146,16 @@
                 @{ string url = "";}
                 <ul class="nav navbar-nav side-nav">
 
+
                     @{ url = Url.Action("Index", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
                         <a href="@Url.Action("Index", "JobSeeker")"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        @*<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>*@
+                    </li>
+
+                    @{ url = Url.Action("Majors", "JobSeeker"); }
+                    <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                        <a href="@Url.Action("Majors", "JobSeeker")"><i class="fa fa-fw fa-dashboard"></i> Choose career fields</a>
                         @*<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>*@
                     </li>
 
@@ -157,13 +164,18 @@
                         <a href="@Url.Action("CVManagment", "JobSeeker")"><i class="fa fa-fw fa-file-pdf-o"></i> CV Managment</a>
                         @*<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>*@
                     </li>
+                    @{ url = Url.Action("CVBuilder", "JobSeeker"); }
+                    <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                        <a href="@Url.Action("CVBuilder", "JobSeeker")"><i class="fa fa-fw fa-file-pdf-o"></i> CV Builder</a>
+                        @*<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>*@
+                    </li>
                     @{ url = Url.Action("ReviewReports", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
                         <a href="@Url.Action("ReviewReports", "JobSeeker")"><i class="fa fa-fw fa-edit"></i> Review Reports</a>
                         @*<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>*@
                     </li>
 
-                    
+
                     @*<li>
                 <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
             </li>

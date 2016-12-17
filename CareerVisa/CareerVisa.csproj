@@ -205,9 +205,12 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CareerVisaDBContext.cs" />
+    <Compile Include="Models\Entities\Documents.cs" />
+    <Compile Include="Models\Entities\DocumentStatus.cs" />
+    <Compile Include="Models\Entities\DocumentsType.cs" />
     <Compile Include="Models\EmployerModel.cs" />
-    <Compile Include="Models\FeatureModel.cs" />
-    <Compile Include="Models\FunctionalityModel.cs" />
+    <Compile Include="Models\Entities\FeatureModel.cs" />
+    <Compile Include="Models\Entities\FunctionalityModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobSeekerModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -221,6 +224,7 @@
     <Content Include="Content\bootstrap-rtl.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\custom.min.css" />
     <Content Include="Content\form-elements.css" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\plugins\morris.css" />
@@ -235,6 +239,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\backgrounds\1.jpg" />
+    <Content Include="images\default-profile-picture.jpg" />
     <Content Include="images\loading.gif" />
     <Content Include="index.html" />
     <Content Include="Scripts\bootstrap.min.js" />
