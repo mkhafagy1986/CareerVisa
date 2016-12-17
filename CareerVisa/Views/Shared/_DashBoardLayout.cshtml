@@ -155,13 +155,13 @@
 
                     @{ url = Url.Action("Majors", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
-                        <a href="@Url.Action("Majors", "JobSeeker")"><i class="fa fa-fw fa-dashboard"></i> Choose career fields</a>
+                        <a href="@Url.Action("Majors", "JobSeeker")"><i class="fa fa-fw fa-th-list"></i> Choose career fields</a>
                         @*<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>*@
                     </li>
 
                     @{ url = Url.Action("CVManagment", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
-                        <a href="@Url.Action("CVManagment", "JobSeeker")"><i class="fa fa-fw fa-file-pdf-o"></i> CV Managment</a>
+                        <a href="@Url.Action("CVManagment", "JobSeeker")"><i class="fa fa-fw fa-cogs"></i> CV Managment</a>
                         @*<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>*@
                     </li>
                     @{ url = Url.Action("CVBuilder", "JobSeeker"); }
@@ -171,7 +171,7 @@
                     </li>
                     @{ url = Url.Action("ReviewReports", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
-                        <a href="@Url.Action("ReviewReports", "JobSeeker")"><i class="fa fa-fw fa-edit"></i> Review Reports</a>
+                        <a href="@Url.Action("ReviewReports", "JobSeeker")"><i class="fa fa-file-text"></i> Review Reports</a>
                         @*<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>*@
                     </li>
 

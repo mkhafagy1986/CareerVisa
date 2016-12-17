@@ -21,6 +21,5 @@ namespace CareerVisa.Models
 
         public DbSet<Feature> Features { get; set; }
         public DbSet<Functionality> Functionalities { get; set; }
-        public DbSet<Twilio> Twilios { get; set; }
     }
 }
