@@ -1,180 +1,109 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <style>
-                /* Global */
-                body {
-                    background: #a83b3b;
-                    padding: 40px;
-                }
-
-                div {
-                    word-break: break-all;
-                }
-
-                img {
-                    max-width: 100%;
-                }
-
-                a {
-                    -webkit-transition: all 150ms ease;
-                    -moz-transition: all 150ms ease;
-                    -ms-transition: all 150ms ease;
-                    -o-transition: all 150ms ease;
-                    transition: all 150ms ease;
-                }
-
-                    a:hover {
-                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
-                        filter: alpha(opacity=50); /* IE7 */
-                        opacity: 0.6;
-                        text-decoration: none;
-                    }
-
-
-                /* Page Header */
-                .page-header {
-                    background: #fbf4e0;
-                    margin: -30px 0px 0px;
-                    padding: 20px 40px;
-                    border-top: 4px solid #ccc;
-                    color: #a83b3b;
-                    text-transform: uppercase;
-                }
-
-                    .page-header h3 {
-                        line-height: 0.88rem;
-                        color: #a83b3b;
-                    }
-
-
-
-                /* Thumbnail Box */
-                .caption {
-                    height: 140px;
-                    width: 100%;
-                    margin: 20px 0px;
-                    padding: 20px;
-                    box-sizing: border-box;
-                    -moz-box-sizing: border-box;
-                    -webkit-box-sizing: border-box;
-                }
-
-                    .caption .span4, .caption .span8 {
-                        padding: 0px 0px;
-                    }
-
-                    .caption .span4 {
-                        border-right: 1px dotted #CCCCCC;
-                    }
-
-                    .caption h3 {
-                        color: #a83b3b;
-                        line-height: 2rem;
-                        margin: 0 0 20px;
-                        text-transform: uppercase;
-                    }
-
-                    .caption p {
-                        font-size: 1rem;
-                        line-height: 1.6rem;
-                        color: #a83b3b;
-                    }
-
-                .btn.btn-mini {
-                    background: #a83b3b;
-                    border-radius: 0 0 0 0;
-                    color: #fbf4e0;
-                    font-size: 0.63rem;
-                    text-shadow: none !important;
-                }
-
-                .carousel-control {
-                    top: 10%;
-                }
-
-    </style>
+    
 <title></title>
     <!-- Bootstrap Core CSS -->
     <link href="Content/bootstrap.min.css" rel="stylesheet">
     <meta charset="utf-8" />
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <hr>
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-3">
+                <div class="text-center">
+                    <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                    <h6>Upload a different photo...</h6>
 
-                <div class="carousel slide" id="myCarousel">
-                    <div class="carousel-inner">
+                    <input type="file" class="form-control">
+                </div>
+            </div>
 
-                        <div class="item active">
+            <!-- edit form column -->
+            <div class="col-md-9 personal-info">
+                <div class="alert alert-info alert-dismissable">
+                    <a class="panel-close close" data-dismiss="alert">×</a>
+                    <i class="fa fa-coffee"></i>
+                    This is an <strong>.alert</strong>. Use this to show important messages to the user.
+                </div>
+                <h3>Personal info</h3>
 
-                            <div class="bannerImage">
-                                <a href="#"><img src="http://placehold.it/960x405" alt=""></a>
-                            </div>
-
-                             <div class="caption row-fluid col-sm-offset-2">
-                                <div class="span4">
-                                    <h3>Nullam Condimentum Nibh Etiam Sem</h3>
-                                    <a class="sign-up-button btn btn-border btn-lg col-md-offset-3 col-md-6 col-md-offset-3 wow fadeInUp animated animated animated" href="#">&raquo; Read More</a>
-                                </div>
-                                <div class="span8">
-                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. |Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
-                                </div>
-                            </div>
-
-                        </div><!-- /Slide1 -->
-
-                        <div class="item">
-
-                            <div class="bannerImage">
-                                <a href="#"><img src="http://placehold.it/960x405" alt=""></a>
-                            </div>
-
-                            <div class="caption row-fluid col-sm-offset-2">
-                                <div class="span4">
-                                    <h3>Nullam Condimentum Nibh Etiam Sem</h3>
-                                    <a class="btn btn-mini" href="#">&raquo; Read More</a>
-                                </div>
-                                <div class="span8">
-                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
-                                </div>
-                            </div>
-
-                        </div><!-- /Slide2 -->
-
-                        <div class="item">
-
-                            <div class="bannerImage">
-                                <a href="#"><img src="http://placehold.it/960x405" alt=""></a>
-                            </div>
-
-                            <div class="caption row-fluid col-sm-offset-2">
-                                <div class="span4">
-                                    <h3>Nullam Condimentum Nibh Etiam Sem</h3>
-                                    <a class="btn btn-mini" href="#">&raquo; Read More</a>
-                                </div>
-                                <div class="span8">
-                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
-                                </div>
-                            </div>
-
-                        </div><!-- /Slide2 -->
-
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">First name:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" value="Jane">
+                        </div>
                     </div>
-
-                    <div class="control-box">
-                        <a data-slide="prev" href="#myCarousel" class="carousel-control left">‹</a>
-                        <a data-slide="next" href="#myCarousel" class="carousel-control right">›</a>
-                    </div><!-- /.control-box -->
-
-                </div><!-- /#myCarousel -->
-
-            </div><!-- /.span12 -->
-        </div><!-- /.row -->
-    </div><!-- /.container -->
-
-    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Last name:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" value="Bishop">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Company:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Email:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" type="text" value="janesemail@gmail.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Time Zone:</label>
+                        <div class="col-lg-8">
+                            <div class="ui-select">
+                                <select id="user_time_zone" class="form-control">
+                                    <option value="Hawaii">(GMT-10:00) Hawaii</option>
+                                    <option value="Alaska">(GMT-09:00) Alaska</option>
+                                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
+                                    <option value="Arizona">(GMT-07:00) Arizona</option>
+                                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
+                                    <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
+                                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
+                                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Username:</label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="text" value="janeuser">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Password:</label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="password" value="11111122333">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Confirm password:</label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="password" value="11111122333">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <input type="button" class="btn btn-primary" value="Save Changes">
+                            <span></span>
+                            <input type="reset" class="btn btn-default" value="Cancel">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr>
 
     <!-- jQuery -->
     <script src="Scripts/jquery.js"></script>
