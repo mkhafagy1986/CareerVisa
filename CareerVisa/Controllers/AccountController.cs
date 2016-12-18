@@ -143,6 +143,12 @@ namespace CareerVisa.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult RegisterConfirmation()
+        {
+            return View();
+        }
+
         //
         // POST: /Account/RegisterJobseeker
         [HttpPost]
@@ -168,7 +174,7 @@ namespace CareerVisa.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", string.Format("Please confirm your account by clicking <a href=\"{0}\">here</a>", callbackUrl));
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("RegisterConfirmation", "Account");
                 }
                 AddErrors(result);
             }
@@ -201,9 +207,9 @@ namespace CareerVisa.Controllers
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", string.Format("Please confirm your account by clicking <a href=\"{0}\">here</a>", callbackUrl));
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your career visa account", string.Format("Thank you for signing up to career visa portal! <br/>Please confirm your account by clicking <a href=\"{0}\">here</a> <br/>Love,<br/>Career Visa team", callbackUrl));
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("RegisterConfirmation", "Account");
                 }
                 AddErrors(result);
             }

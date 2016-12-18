@@ -29,7 +29,7 @@ namespace CareerVisa.Models
         public string Lastname { get; set; }
 
         [Required]
-        [StringLength(13)]
+        [StringLength(14)]
         [Display(Name = "Phone Number")]
         public override string PhoneNumber { get; set; }
 

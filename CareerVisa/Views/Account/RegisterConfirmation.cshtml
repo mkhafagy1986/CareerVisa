@@ -1,0 +1,24 @@
+﻿@section DefaultcssBundle{
+    @Styles.Render("~/Content/css")
+}
+
+@{
+    ViewBag.Title = "Register Confirmation";
+}
+<div class="qlt-confirmation">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <center>
+                <img src="~/images/open_mail_letter-512.png" style="width:30px; height: 30px;">
+                <p class="desc">Thank you for signing up to career visa portal!<br>We've sent a confirmation link on your email.<br>Please visit your <img style="width: 40px; height: 40px" src="~/images/inbox.png">.</p>
+            </center>
+
+            <p class="notice">Note:<br>Using our <b>social login</b>, you will be ask to add your email address during authentication. This is part of our security policy.</p>
+        </div>
+    </div>
+</div>
+
+@section DefaultscriptBundle{
+    @Scripts.Render("~/bundles/scripts")
+}
+

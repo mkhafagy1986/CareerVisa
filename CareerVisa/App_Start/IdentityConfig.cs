@@ -14,6 +14,8 @@ using CareerVisa.Models;
 using System.Diagnostics;
 using System.Net;
 using System.Configuration;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace CareerVisa
 {
@@ -25,33 +27,19 @@ namespace CareerVisa
             return configSendGridasync(message);
         }
 
-        private Task configSendGridasync(IdentityMessage message)
+        private async Task configSendGridasync(IdentityMessage message)
         {
-            var myMessage = new SendGridMessage();
-            myMessage.AddTo(message.Destination);
-            myMessage.From = new System.Net.Mail.MailAddress(
-                                "Joe@contoso.com", "Joe S.");
-            myMessage.Subject = message.Subject;
-            myMessage.Text = message.Body;
-            myMessage.Html = message.Body;
+            string apiKey = System.Configuration.ConfigurationManager.AppSettings["apiKey"];
+            dynamic sg = new SendGridAPIClient(apiKey, baseUri: "https://api.sendgrid.com", version: "v3");
 
-            var credentials = new NetworkCredential(
-                       ConfigurationManager.AppSettings["mailAccount"],
-                       ConfigurationManager.AppSettings["mailPassword"]
-                       );
+            Email from = new Email(System.Configuration.ConfigurationManager.AppSettings["mailAccount"], name: "Career Visa Confirmation email");
+            string subject = message.Subject;
+            Email to = new Email(message.Destination);
+            Content content = new Content("text/html", message.Body);
+            Mail mail = new Mail(from, subject, to, content);
 
-            // Create a Web transport for sending email.
-            var transportWeb = new Web(credentials);
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
 
-            // Send the email.
-            if (transportWeb != null)
-            {
-                return transportWeb.DeliverAsync(myMessage);
-            }
-            else
-            {
-                return Task.FromResult(0);
-            }
         }
     }
 
@@ -84,7 +72,7 @@ namespace CareerVisa
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -125,7 +113,7 @@ namespace CareerVisa
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;

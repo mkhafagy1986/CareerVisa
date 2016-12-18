@@ -1,4 +1,7 @@
-﻿@{
+﻿@section DefaultcssBundle{
+    @Styles.Render("~/Content/css")
+}
+@{
     ViewBag.Title = "Confirm Email";
 }
 
@@ -8,3 +11,6 @@
         Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
     </p>
 </div>
+@section DefaultscriptBundle{
+    @Scripts.Render("~/bundles/scripts")
+}

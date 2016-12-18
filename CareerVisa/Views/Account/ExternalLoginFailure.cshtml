@@ -1,4 +1,7 @@
-﻿@{
+﻿@section DefaultcssBundle{
+    @Styles.Render("~/Content/css")
+}
+@{
     ViewBag.Title = "Login Failure";
 }
 
@@ -6,3 +9,6 @@
     <h2>@ViewBag.Title.</h2>
     <h3 class="text-danger">Unsuccessful login with service.</h3>
 </hgroup>
+@section DefaultscriptBundle{
+    @Scripts.Render("~/bundles/scripts")
+}
