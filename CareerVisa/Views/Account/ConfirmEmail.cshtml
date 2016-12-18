@@ -2,14 +2,23 @@
     @Styles.Render("~/Content/css")
 }
 @{
-    ViewBag.Title = "Confirm Email";
+    ViewBag.Title = "Successfuly Email Confirmed";
 }
 
 <h2>@ViewBag.Title.</h2>
+
+<br/>
 <div>
-    <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
+    <center>
+        <img src="~/images/confirmationsucessfully.png" style="width: 300px; height: 300px;">
+    </center>
+    <br />
+    <h3>
+        @*<p>*@
+        Thank you for confirming your email. @*Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink"})*@
+        @*</p>*@
+    </h3>
+    <br/>
 </div>
 @section DefaultscriptBundle{
     @Scripts.Render("~/bundles/scripts")

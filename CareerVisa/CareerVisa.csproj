@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44397</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -253,11 +252,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\backgrounds\1.jpg" />
+    <Content Include="images\confirmationsucessfully.png" />
     <Content Include="images\default-profile-picture.jpg" />
     <Content Include="images\inbox.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\open_mail_letter-512.png" />
-    <Content Include="index.html" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\main.css" />
     <Content Include="Content\extras\animate.css" />
@@ -395,6 +394,7 @@
     <Content Include="Views\Shared\_DashBoardLayout.cshtml" />
     <Content Include="Views\JobSeeker\Index.cshtml" />
     <Content Include="Views\Account\RegisterConfirmation.cshtml" />
+    <Content Include="Views\Home\SliderSection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
