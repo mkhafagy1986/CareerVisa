@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44397</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -214,15 +215,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612212345269_CareerVisa_Models.cs" />
+    <Compile Include="Migrations\201612212345269_CareerVisa_Models.Designer.cs">
+      <DependentUpon>201612212345269_CareerVisa_Models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CareerVisaDBContext.cs" />
+    <Compile Include="Models\Entities\CareerFields.cs" />
     <Compile Include="Models\Entities\Documents.cs" />
     <Compile Include="Models\Entities\DocumentStatus.cs" />
     <Compile Include="Models\Entities\DocumentsType.cs" />
     <Compile Include="Models\EmployerModel.cs" />
     <Compile Include="Models\Entities\FeatureModel.cs" />
     <Compile Include="Models\Entities\FunctionalityModel.cs" />
+    <Compile Include="Models\Entities\JobSeekerCareerFields.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobSeekerModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -343,7 +350,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="TestSlider.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -399,6 +408,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UserProfilePictures\712ac26d-c5ea-4e37-8ba1-81abbee03219\" />
     <Folder Include="Views\Employeer\" />
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +417,11 @@
     </Content>
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612212345269_CareerVisa_Models.resx">
+      <DependentUpon>201612212345269_CareerVisa_Models.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

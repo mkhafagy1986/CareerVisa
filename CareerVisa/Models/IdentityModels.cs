@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using CareerVisa.Models.Entities;
 
 namespace CareerVisa.Models
 {
@@ -33,7 +34,12 @@ namespace CareerVisa.Models
         [Display(Name = "Phone Number")]
         public override string PhoneNumber { get; set; }
 
+        public string Address { get; set; }
+        public string LinkedInURL { get; set; }
+        public string PersonalPhotoPath { get; set; }
+        public string WebsiteURL { get; set; }
+
     }
 
-    
+
 }

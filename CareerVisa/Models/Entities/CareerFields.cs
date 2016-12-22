@@ -6,10 +6,12 @@ using System.Web;
 
 namespace CareerVisa.Models.Entities
 {
-    public class DocumentStatus
+    public class CareerField
     {
         [Key]
-        public int DocumentStatusId { get; set; }
-        public string DocumentStatusDescription { get; set; }
+        public int CareerFieldId { get; set; }
+
+        [StringLength(500)]
+        public string CareerFieldName { get; set; }
     }
 }

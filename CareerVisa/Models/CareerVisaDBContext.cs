@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using CareerVisa.Models.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -21,5 +22,11 @@ namespace CareerVisa.Models
 
         public DbSet<Feature> Features { get; set; }
         public DbSet<Functionality> Functionalities { get; set; }
+        public DbSet<CareerField> CareerFields { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<DocumentStatus> DocumentStatus { get; set; }
+        public DbSet<DocumentsType> DocumentsTypes { get; set; }
+        public DbSet<JobSeekerCareerField> JobSeekerCareerFields { get; set; }
+        
     }
 }
