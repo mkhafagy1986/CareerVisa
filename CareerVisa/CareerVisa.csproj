@@ -261,6 +261,7 @@
     <Content Include="images\backgrounds\1.jpg" />
     <Content Include="images\confirmationsucessfully.png" />
     <Content Include="images\default-profile-picture.jpg" />
+    <Content Include="images\features\cv_image.png" />
     <Content Include="images\inbox.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\open_mail_letter-512.png" />
