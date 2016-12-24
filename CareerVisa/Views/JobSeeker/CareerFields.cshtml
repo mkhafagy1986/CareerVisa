@@ -11,8 +11,7 @@
 <h2>Job Seeker Career Fields</h2>
 <br />
 <p>
-    @Html.ActionLink(" Add Career Field", "AddCareerField", "JobSeeker", null, new { @class = "modal-link btn btn-success" })
-    <a class="AddCareerFieldButton fa fa-plus-circle" href="#"><strong>Add Career Field</strong></a>
+    @Html.ActionLink(" Add Career Field", "AddCareerField", "JobSeeker", null, new { @class = "btn btn-primary btn-lg fa fa-plus-circle", data_target= "#modal-container", data_toggle= "modal" })
     @*<button class="AddCareerFieldButton fa fa-plus-circle"><strong> Add Career Field</strong></button>*@
     @*<strong>@Html.ActionLink(" Add Career Field", "AddCareerField", "JobSeeker", null,new {@class= "fa fa-plus-circle" })</strong>*@
 </p>

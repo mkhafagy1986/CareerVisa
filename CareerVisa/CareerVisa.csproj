@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201612240208032_CareerVisa_CareerField.Designer.cs">
       <DependentUpon>201612240208032_CareerVisa_CareerField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612241745362_CareerVisa_UpdateDatabase.cs" />
+    <Compile Include="Migrations\201612241745362_CareerVisa_UpdateDatabase.Designer.cs">
+      <DependentUpon>201612241745362_CareerVisa_UpdateDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CareerVisaDBContext.cs" />
@@ -233,7 +237,6 @@
     <Compile Include="Models\EmployerModel.cs" />
     <Compile Include="Models\Entities\FeatureModel.cs" />
     <Compile Include="Models\Entities\FunctionalityModel.cs" />
-    <Compile Include="Models\Entities\JobSeekerCareerFields.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobSeekerModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -434,6 +437,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612240208032_CareerVisa_CareerField.resx">
       <DependentUpon>201612240208032_CareerVisa_CareerField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612241745362_CareerVisa_UpdateDatabase.resx">
+      <DependentUpon>201612241745362_CareerVisa_UpdateDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -26,7 +26,6 @@ namespace CareerVisa.Models
         public DbSet<Document> Documents { get; set; }
         public DbSet<DocumentStatus> DocumentStatus { get; set; }
         public DbSet<DocumentsType> DocumentsTypes { get; set; }
-        public DbSet<JobSeekerCareerField> JobSeekerCareerFields { get; set; }
 
     }
 }
