@@ -9,8 +9,8 @@ namespace CareerVisa
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.backstretch.min.js"));
+                        "~/Scripts/jquery-{version}.js"/*,*/
+                        /*"~/Scripts/jquery.backstretch.min.js"*/));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -20,11 +20,16 @@ namespace CareerVisa
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/respond.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/wow.js",
-                      "~/Scripts/main.js"));
+                      "~/Scripts/main.js",
+                      "~/Scripts/gridmvc.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -60,23 +65,24 @@ namespace CareerVisa
                       "~/Content/Gridmvc.css",
                      "~/Content/style.css",
                      "~/Content/form-elements.css",
-                     "~/font-awesome/css/font-awesome.min.css",
-                     "~/Content/Gridmvc.css"));
+                     "~/font-awesome/css/font-awesome.min.css"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/scriptsdashboard").Include(
-                      "~/Scripts/jquery.js",
+                      //"~/Scripts/jquery.js",
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/plugins/morris/raphael.min.js",
                       "~/Scripts/plugins/morris/morris.min.js",
-                      "~/Scripts/plugins/morris/morris-data.js"));
+                      "~/Scripts/plugins/morris/morris-data.js",
+                      "~/Scripts/gridmvc.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/cssdashboard").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/sb-admin.css",
                       "~/Content/morris.css",
                       "~/font-awesome/css/font-awesome.min.css",
-                      "~/Content/custom.min.css"));
+                      "~/Content/custom.min.css",
+                      "~/Content/Gridmvc.css"));
         }
     }
 }

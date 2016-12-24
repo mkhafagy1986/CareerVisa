@@ -15,6 +15,7 @@
 
     <!-- Bootstrap Core CSS -->
     @Styles.Render("~/Content/cssdashboard")
+    @Scripts.Render("~/bundles/modernizr")
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,7 +36,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="@Url.Action("Index","Home")" class="navbar-brand">Career Visa</a>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">Career Visa</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -52,7 +53,9 @@
                                         <h5 class="media-heading">
                                             <strong>John Smith</strong>
                                         </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p class="small text-muted">
+                                            <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
+                                        </p>
                                         <p>Lorem ipsum dolor sit amet, consectetur...</p>
                                     </div>
                                 </div>
@@ -68,7 +71,9 @@
                                         <h5 class="media-heading">
                                             <strong>John Smith</strong>
                                         </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p class="small text-muted">
+                                            <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
+                                        </p>
                                         <p>Lorem ipsum dolor sit amet, consectetur...</p>
                                     </div>
                                 </div>
@@ -84,7 +89,9 @@
                                         <h5 class="media-heading">
                                             <strong>John Smith</strong>
                                         </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p class="small text-muted">
+                                            <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
+                                        </p>
                                         <p>Lorem ipsum dolor sit amet, consectetur...</p>
                                     </div>
                                 </div>
@@ -153,10 +160,9 @@
                         @*<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>*@
                     </li>
 
-                    @{ url = Url.Action("Majors", "JobSeeker"); }
+                    @{ url = Url.Action("CareerFields", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
-                        <a href="@Url.Action("Majors", "JobSeeker")"><i class="fa fa-fw fa-th-list"></i> Choose career fields</a>
-                        @*<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>*@
+                        <a href="@Url.Action("CareerFields", "JobSeeker")"><i class="fa fa-fw fa-th-list"></i> Choose career fields</a>
                     </li>
 
                     @{ url = Url.Action("CVManagment", "JobSeeker"); }
@@ -177,31 +183,31 @@
 
 
                     @*<li>
-                <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-            </li>
-            <li>
-                <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-            </li>
-            <li>
-                <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-            </li>
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="demo" class="collapse">
-                    <li>
-                        <a href="#">Dropdown Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Dropdown Item</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-            </li>
-            <li>
-                <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
-            </li>*@
+                            <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                        </li>
+                        <li>
+                            <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                        </li>
+                        <li>
+                            <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="demo" class="collapse">
+                                <li>
+                                    <a href="#">Dropdown Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Dropdown Item</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                        </li>
+                        <li>
+                            <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                        </li>*@
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -213,15 +219,12 @@
                         <h1 class="page-header">
                             Dashboard <small>for job seeker</small>
                         </h1>
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-dashboard"></i> Dashboard
-                            </li>
-                        </ol>
+
                     </div>
                 </div>
-
-                @RenderBody()
+                <div style="min-height: 580px !important;">
+                    @RenderBody()
+                </div>
             </div>
             <!-- /.container-fluid -->
         </div>
@@ -229,8 +232,45 @@
     </div>
     <!-- /#wrapper -->
     <!-- jQuery -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/scriptsdashboard")
     @RenderSection("scripts", required: false)
+
+    <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // Initialize numeric spinner input boxes
+            //$(".numeric-spinner").spinedit();
+
+            // Initalize modal dialog
+            // attach modal-container bootstrap attributes to links with .modal-link class.
+            // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
+            $('body').on('click', '.modal-link', function (e) {
+                e.preventDefault();
+                $(this).attr('data-target', '#modal-container');
+                $(this).attr('data-toggle', 'modal');
+            });
+
+            // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
+            $('body').on('click', '.modal-close-btn', function () {
+                $('#modal-container').modal('hide');
+            });
+
+            //clear modal cache, so that new content can be loaded
+            $('#modal-container').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+
+            $('#CancelModal').on('click', function () {
+                return false;
+            });
+        });
+    </script>
 </body>
 </html>
+
 

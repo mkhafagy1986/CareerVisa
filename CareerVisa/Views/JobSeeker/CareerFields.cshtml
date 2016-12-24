@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CareerVisa.Models.Entities.CareerField>
+@using GridMvc.Html
+
+
+
+@{
+    ViewBag.DashBoardTitle = "JobSeeker - Career Fields";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<h2>Job Seeker Career Fields</h2>
+<br />
+<p>
+    @Html.ActionLink(" Add Career Field", "AddCareerField", "JobSeeker", null, new { @class = "modal-link btn btn-success" })
+    <a class="AddCareerFieldButton fa fa-plus-circle" href="#"><strong>Add Career Field</strong></a>
+    @*<button class="AddCareerFieldButton fa fa-plus-circle"><strong> Add Career Field</strong></button>*@
+    @*<strong>@Html.ActionLink(" Add Career Field", "AddCareerField", "JobSeeker", null,new {@class= "fa fa-plus-circle" })</strong>*@
+</p>
+
+<div class="code-cut">
+    @Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(c => c.CareerFieldId).Titled("Career Field No.").Filterable(true);
+    columns.Add(c => c.CareerFieldName).Titled("Career Field").Filterable(true);
+    columns.Add()
+    .Encoded(false)
+    .Sanitized(false)
+    .SetWidth(30)
+    .RenderValueAs(o => Html.ActionLink(" ", "DeleteCareerField", "JobSeeker", null, new { @class = "fa fa-trash", id = o.CareerFieldId }));
+
+}).Sortable(true).WithPaging(10)
+</div>

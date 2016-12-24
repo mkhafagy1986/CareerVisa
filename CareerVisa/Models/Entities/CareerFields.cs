@@ -13,5 +13,6 @@ namespace CareerVisa.Models.Entities
 
         [StringLength(500)]
         public string CareerFieldName { get; set; }
+        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

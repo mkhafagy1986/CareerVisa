@@ -219,6 +219,10 @@
     <Compile Include="Migrations\201612212345269_CareerVisa_Models.Designer.cs">
       <DependentUpon>201612212345269_CareerVisa_Models.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612240208032_CareerVisa_CareerField.cs" />
+    <Compile Include="Migrations\201612240208032_CareerVisa_CareerField.Designer.cs">
+      <DependentUpon>201612240208032_CareerVisa_CareerField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CareerVisaDBContext.cs" />
@@ -280,6 +284,7 @@
     <Content Include="Scripts\gridmvc.lang.ru.js" />
     <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Scripts\jquery-min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.backstretch.js" />
     <Content Include="Scripts\jquery.backstretch.min.js" />
     <Content Include="Scripts\jquery.js" />
@@ -350,6 +355,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="testprofile.html" />
     <Content Include="TestSlider.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -406,6 +412,9 @@
     <Content Include="Views\JobSeeker\Index.cshtml" />
     <Content Include="Views\Account\RegisterConfirmation.cshtml" />
     <Content Include="Views\Home\SliderSection.cshtml" />
+    <Content Include="Views\JobSeeker\EditProfile.cshtml" />
+    <Content Include="Views\JobSeeker\CareerFields.cshtml" />
+    <Content Include="Views\JobSeeker\_AddCareerField.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -422,6 +431,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612212345269_CareerVisa_Models.resx">
       <DependentUpon>201612212345269_CareerVisa_Models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612240208032_CareerVisa_CareerField.resx">
+      <DependentUpon>201612240208032_CareerVisa_CareerField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

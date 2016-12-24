@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using CareerVisa.Models.Entities;
+using System.Collections.Generic;
 
 namespace CareerVisa.Models
 {
@@ -35,9 +36,15 @@ namespace CareerVisa.Models
         public override string PhoneNumber { get; set; }
 
         public string Address { get; set; }
+        [Display(Name = "LinkedIn URL")]
+        [Url]
         public string LinkedInURL { get; set; }
         public string PersonalPhotoPath { get; set; }
+        [Display(Name = "Website URL")]
+        [Url]
         public string WebsiteURL { get; set; }
+
+        public virtual ICollection<CareerField> CareerFields { get; set; }
 
     }
 
