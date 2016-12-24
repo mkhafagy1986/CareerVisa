@@ -102,20 +102,57 @@ namespace CareerVisa.Controllers
             return View(currentUser.CareerFields);
         }
 
+        [Authorize(Roles = "JobSeeker")]
         public PartialViewResult AddCareerField()
         {
             return PartialView("_AddCareerField", new CareerField());
         }
 
         [HttpPost]
-        public JsonResult AddCareerField(CareerField model)
+        [Authorize(Roles = "JobSeeker")]
+        public ActionResult AddCareerField(CareerField model)
         {
-            bool isSuccess = true;
-            if (ModelState.IsValid)
+            using (var context = new ApplicationDbContext())
             {
-                //isSuccess = Save data here return boolean
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser();
+
+                user = manager.FindById(User.Identity.GetUserId());
+                if (ModelState.IsValid)
+                {
+
+                    user.CareerFields.Add(context.CareerFields.Where(cf => cf.CareerFieldId == model.CareerFieldId).ToList().First());
+                    Task.WaitAny(manager.UpdateAsync(user));
+
+                    Task.WaitAny(context.SaveChangesAsync());
+                    return View("CareerFields", user.CareerFields);
+                }
+            return View("Index", user);
             }
-            return Json(isSuccess);
+        }
+
+        [Authorize(Roles = "JobSeeker")]
+        public ActionResult DeleteCareerField(int Id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser();
+
+                user = manager.FindById(User.Identity.GetUserId());
+                if (ModelState.IsValid)
+                {
+
+                    user.CareerFields.Remove(user.CareerFields.Where(cf => cf.CareerFieldId == Id).ToList().First());
+                    Task.WaitAny(manager.UpdateAsync(user));
+
+                    Task.WaitAny(context.SaveChangesAsync());
+                    return View("CareerFields", user.CareerFields);
+                }
+                return View("Index", user);
+            }
         }
     }
 }

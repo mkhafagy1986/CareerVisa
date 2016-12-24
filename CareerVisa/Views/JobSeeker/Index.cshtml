@@ -1,4 +1,7 @@
 ﻿@model CareerVisa.Models.ApplicationUser
+@using GridMvc.Html
+
+
 @{
     ViewBag.DashBoardTitle = "Career Visa - Job Seeker Dashboard";
     Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
@@ -38,7 +41,7 @@
                         <li>
                             <i class="fa fa-briefcase user-profile-icon"></i>
                             <a href="@Model.LinkedInURL" target="_blank">Linked In Profile</a>
-                            
+
                         </li>
                         <li class="m-top-xs">
                             <i class="fa fa-external-link user-profile-icon"></i>
@@ -56,7 +59,7 @@
                                 <p>@CareerFieldItem.CareerFieldName</p>
                             </li>
                         }
-                        
+
                     </ul>
                     <!-- end of skills -->
                 </div>
@@ -151,63 +154,14 @@
                                 <!-- end user projects -->
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="tab_CareerFieldsContent" aria-labelledby="tab_CareerFields">
-                                <table class="data table table-striped no-margin">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Project Name</th>
-                                            <th>Client Company</th>
-                                            <th class="hidden-phone">Hours Spent</th>
-                                            <th>Contribution</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>New Company Takeover Review</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">18</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="35"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>New Partner Contracts Consultanci</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">13</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-danger" data-transitiongoal="15"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Partners and Inverstors report</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">30</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="45"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>New Company Takeover Review</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">28</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="75"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="code-cut">
+                                    @Html.Grid(Model.CareerFields).Columns(columns =>
+                                    {
+                                        columns.Add(c => c.CareerFieldName).Titled("Career Field");
+
+                                    }).WithPaging(10)@*.Sortable(true)*@
+    
+                                </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="tab_CoverLetterContent" aria-labelledby="tab_CoverLetter">
                                 <table class="data table table-striped no-margin">

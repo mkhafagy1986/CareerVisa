@@ -19,13 +19,14 @@
 <div class="code-cut">
     @Html.Grid(Model).Columns(columns =>
 {
-    columns.Add(c => c.CareerFieldId).Titled("Career Field No.").Filterable(true);
+    //columns.Add(c => c.CareerFieldId).Titled("Career Field No.").Filterable(true);
     columns.Add(c => c.CareerFieldName).Titled("Career Field").Filterable(true);
     columns.Add()
     .Encoded(false)
     .Sanitized(false)
     .SetWidth(30)
-    .RenderValueAs(o => Html.ActionLink(" ", "DeleteCareerField", "JobSeeker", null, new { @class = "fa fa-trash", id = o.CareerFieldId }));
+    .RenderValueAs(o => Html.ActionLink(" ", "DeleteCareerField", "JobSeeker", new { Id = o.CareerFieldId }, new { @class = "fa fa-trash"}));
 
 }).Sortable(true).WithPaging(10)
+  
 </div>
