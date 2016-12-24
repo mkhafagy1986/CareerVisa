@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44397</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -278,6 +277,8 @@
     <Content Include="images\inbox.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\open_mail_letter-512.png" />
+    <Content Include="index.html" />
+    <Content Include="OriginalFileUploader.html" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\main.css" />
     <Content Include="Content\extras\animate.css" />
@@ -402,6 +403,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="testdashboard.html" />
     <Content Include="testprofile.html" />
     <Content Include="TestSlider.html" />
     <Content Include="Web.config">
