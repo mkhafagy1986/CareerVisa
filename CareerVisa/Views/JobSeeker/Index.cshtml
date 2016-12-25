@@ -1,166 +1,114 @@
 ﻿@model CareerVisa.Models.ApplicationUser
-@using GridMvc.Html
+@using CareerVisa.Models
+    @using GridMvc.Html
 
 
-@{
-    ViewBag.DashBoardTitle = "Career Visa - Job Seeker Dashboard";
-    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
-}
+    @{
+        ViewBag.DashBoardTitle = "Career Visa - Job Seeker Dashboard";
+        Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+    }
 
-<!-- Page Heading -->
-<!-- /.row -->
-@*<div class="row">
-        <div class="col-lg-12">
-            <div class="alert alert-info alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="http://startbootstrap.com/template-overviews/sb-admin-2" class="alert-link">SB Admin 2</a> for additional features!
-            </div>
-        </div>
-    </div>*@
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Job Seeker <small>profile</small></h2>
-
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-                    <div class="profile_img">
-                        <div id="crop-avatar">
-                            <!-- Current avatar -->
-                            <img class="img-responsive avatar-view" style="height: 204px;width: 204px" src="~/UserProfilePictures/@Model.PersonalPhotoPath" alt="Avatar" title="Change the avatar">
-                        </div>
-                    </div>
-                    <h3>@Model.FirstName @Model.Lastname</h3>
-                    <ul class="list-unstyled user_data">
-                        <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.Address
-                        </li>
-                        <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i>
-                            <a href="@Model.LinkedInURL" target="_blank">Linked In Profile</a>
-
-                        </li>
-                        <li class="m-top-xs">
-                            <i class="fa fa-external-link user-profile-icon"></i>
-                            <a href="@Model.WebsiteURL" target="_blank">Pesonal Website</a>
-                        </li>
-                    </ul>
-                    <a class="btn btn-success" href="@Url.Action("EditProfile","JobSeeker")"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
-                    <br />
-                    <!-- start skills -->
-                    <h4><strong>Career Fields</strong></h4>
-                    <ul class="list-unstyled user_data">
-                        @foreach (var CareerFieldItem in Model.CareerFields)
-                        {
-                            <li>
-                                <p>@CareerFieldItem.CareerFieldName</p>
-                            </li>
-                        }
-
-                    </ul>
-                    <!-- end of skills -->
+    <!-- Page Heading -->
+    <!-- /.row -->
+    @*<div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="http://startbootstrap.com/template-overviews/sb-admin-2" class="alert-link">SB Admin 2</a> for additional features!
                 </div>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    <div class="profile_title">
-                        <div class="col-md-6">
-                            <h2>Job Seeker documentspr</h2>
-                        </div>
-                        @*<div class="col-md-6">
-                                <div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">
-                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                    <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                                </div>
-                            </div>*@
-                    </div>
+            </div>
+        </div>*@
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Job Seeker <small>profile</small></h2>
 
-                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#tab_UploadedDocsContent" role="tab" id="tab_Docs" data-toggle="tab" aria-expanded="false">Uploaded CVs</a>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                        <div class="profile_img">
+                            <div id="crop-avatar">
+                                <!-- Current avatar -->
+                                <img class="img-responsive avatar-view" style="height: 204px;width: 204px" src="~/UserProfilePictures/@Model.PersonalPhotoPath" alt="Avatar" title="Change the avatar">
+                            </div>
+                        </div>
+                        <h3>@Model.FirstName @Model.Lastname</h3>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <i class="fa fa-map-marker user-profile-icon"></i> @Model.Address
                             </li>
-                            <li role="presentation" class="">
-                                <a href="#tab_CareerFieldsContent" role="tab" id="tab_CareerFields" data-toggle="tab" aria-expanded="false">Career Fields</a>
+                            <li>
+                                <i class="fa fa-briefcase user-profile-icon"></i>
+                                <a href="@Model.LinkedInURL" target="_blank">Linked In Profile</a>
+
                             </li>
-                            <li role="presentation" class="">
-                                <a href="#tab_CoverLetterContent" role="tab" id="tab_CoverLetter" data-toggle="tab" aria-expanded="false">Uploaded Cover Letters</a>
-                            </li>
-                            <li role="presentation" class="">
-                                <a href="#tab_ReviewReportsContent" role="tab" id="tab_reviewReports" data-toggle="tab" aria-expanded="false">Review Reports</a>
+                            <li class="m-top-xs">
+                                <i class="fa fa-external-link user-profile-icon"></i>
+                                <a href="@Model.WebsiteURL" target="_blank">Pesonal Website</a>
                             </li>
                         </ul>
-                        <div id="myTabContent" class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade active in" id="tab_UploadedDocsContent" aria-labelledby="profile-tab">
-                                <!-- start user projects -->
-                                <table class="data table table-striped no-margin">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Project Name</th>
-                                            <th>Client Company</th>
-                                            <th class="hidden-phone">Hours Spent</th>
-                                            <th>Contribution</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>New Company Takeover Review</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">18</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="35"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>New Partner Contracts Consultanci</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">13</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-danger" data-transitiongoal="15"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Partners and Inverstors report</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">30</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="45"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>New Company Takeover Review</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">28</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="75"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <!-- end user projects -->
+                        <a class="btn btn-success" href="@Url.Action("EditProfile","JobSeeker")"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                        <br />
+                        <!-- start skills -->
+                        <h4><strong>Career Fields</strong></h4>
+                        <ul class="list-unstyled user_data">
+                            @foreach (var CareerFieldItem in Model.CareerFields)
+                            {
+                                <li>
+                                    <p>@CareerFieldItem.CareerFieldName</p>
+                                </li>
+                            }
+
+                        </ul>
+                        <!-- end of skills -->
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="profile_title">
+                            <div class="col-md-6">
+                                <h2>Job Seeker documentspr</h2>
                             </div>
-                            <div role="tabpanel" class="tab-pane fade" id="tab_CareerFieldsContent" aria-labelledby="tab_CareerFields">
-                                <div class="code-cut">
-                                    @Html.Grid(Model.CareerFields).Columns(columns =>
+                            @*<div class="col-md-6">
+                                    <div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">
+                                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                        <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                                    </div>
+                                </div>*@
+                        </div>
+
+                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#tab_UploadedDocsContent" role="tab" id="tab_Docs" data-toggle="tab" aria-expanded="false">Uploaded CVs</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_CareerFieldsContent" role="tab" id="tab_CareerFields" data-toggle="tab" aria-expanded="false">Career Fields</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_CoverLetterContent" role="tab" id="tab_CoverLetter" data-toggle="tab" aria-expanded="false">Uploaded Cover Letters</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_ReviewReportsContent" role="tab" id="tab_reviewReports" data-toggle="tab" aria-expanded="false">Review Reports</a>
+                                </li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_UploadedDocsContent" aria-labelledby="profile-tab">
+                                    <div class="code-cut">
+                                        @Html.Grid((List<DocumentViewModel>)ViewBag.JobSeekerCVs).Columns(columns =>
+                                    {
+                                        columns.Add(c => c.DocumentDescription).Titled("CV Description").SetWidth(250);
+                                        columns.Add(c => c.DocumentStatus).Titled("CV Status").SetWidth(100);
+                                    }).WithPaging(10)
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="tab_CareerFieldsContent" aria-labelledby="tab_CareerFields">
+                                        <div class="code-cut">
+                                            @Html.Grid(Model.CareerFields).Columns(columns =>
                                     {
                                         columns.Add(c => c.CareerFieldName).Titled("Career Field");
 
                                     }).WithPaging(10)@*.Sortable(true)*@
-    
+
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="tab_CoverLetterContent" aria-labelledby="tab_CoverLetter">

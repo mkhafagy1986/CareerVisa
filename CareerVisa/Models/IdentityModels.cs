@@ -45,6 +45,7 @@ namespace CareerVisa.Models
         public string WebsiteURL { get; set; }
 
         public virtual ICollection<CareerField> CareerFields { get; set; }
+        public virtual ICollection<Document> Documents { get; set; }
 
     }
 

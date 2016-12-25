@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CareerVisa.Models.DocumentViewModel>
+@using GridMvc.Html
+
+@{
+    ViewBag.DashBoardTitle = "Career Visa - JobSeeker - Documents";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<h2>Job Seeker Documents</h2>
+
+<p>
+    @Html.ActionLink(" Upload CV", "AddJobSeekerCV", "JobSeeker", null, new { @class = "btn btn-primary btn-lg fa fa-plus-circle", data_target = "#modal-container", data_toggle = "modal" })
+</p>
+
+<div class="code-cut">
+    @Html.Grid(Model).Columns(columns =>
+{
+    //columns.Add(c => c.CareerFieldId).Titled("Career Field No.").Filterable(true);
+    columns.Add(c => c.DocumentDescription).Titled("CV Description").SetWidth(250);
+    columns.Add(c => c.DocumentStatus).Titled("CV Status").SetWidth(100);
+    columns.Add()
+    .Encoded(false)
+    .Sanitized(false)
+    .SetWidth(30)
+    .RenderValueAs(o => Html.ActionLink(" Download", "DownloadFile", "JobSeeker", new { FilePath = o.DocumentPath }, new { @class = "fa fa-download" }));
+    columns.Add()
+    .Encoded(false)
+    .Sanitized(false)
+    .SetWidth(30)
+    .RenderValueAs(o => Html.ActionLink(" Delete", "DeleteJobSeekerCV", "JobSeeker", new { Id = o.DocumentId }, new { @class = "fa fa-trash" }));
+
+}).Sortable(true).WithPaging(10)
+
+</div>
+

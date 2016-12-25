@@ -164,9 +164,9 @@
                         <a href="@Url.Action("CareerFields", "JobSeeker")"><i class="fa fa-fw fa-th-list"></i> Choose career fields</a>
                     </li>
 
-                    @{ url = Url.Action("CVManagment", "JobSeeker"); }
+                    @{ url = Url.Action("JobSeekerCVs", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
-                        <a href="@Url.Action("CVManagment", "JobSeeker")"><i class="fa fa-fw fa-cogs"></i> CV Managment</a>
+                        <a href="@Url.Action("JobSeekerCVs", "JobSeeker")"><i class="fa fa-fw fa-cogs"></i> CV Managment</a>
                     </li>
                     @{ url = Url.Action("CVBuilder", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">

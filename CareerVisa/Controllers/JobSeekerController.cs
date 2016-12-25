@@ -18,12 +18,18 @@ namespace CareerVisa.Controllers
         [Authorize(Roles = "JobSeeker")]
         public ActionResult Index()
         {
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            using (var context = new ApplicationDbContext())
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser();
 
-            // Get the current logged in User and look up the user in ASP.NET Identity
-            var currentUser = manager.FindById(User.Identity.GetUserId());
+                user = manager.FindById(User.Identity.GetUserId());
 
-            return View(currentUser);
+                ViewBag.JobSeekerCVs = GetDocumentViewModel(context, user.Documents);
+
+                return View(user);
+            }
         }
 
         [Authorize(Roles = "JobSeeker")]
@@ -128,7 +134,7 @@ namespace CareerVisa.Controllers
                     Task.WaitAny(context.SaveChangesAsync());
                     return View("CareerFields", user.CareerFields);
                 }
-            return View("Index", user);
+                return View("Index", user);
             }
         }
 
@@ -153,6 +159,137 @@ namespace CareerVisa.Controllers
                 }
                 return View("Index", user);
             }
+        }
+
+        public ActionResult JobSeekerCVs()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser currentUser = new ApplicationUser();
+
+                currentUser = manager.FindById(User.Identity.GetUserId());
+                List<DocumentViewModel> JobSeekerCVs = GetDocumentViewModel(context, currentUser.Documents);
+                return View(JobSeekerCVs);
+            }
+
+        }
+
+        private static List<DocumentViewModel> GetDocumentViewModel(ApplicationDbContext context, ICollection<Document> UserDocs)
+        {
+            List<DocumentViewModel> JobSeekerCVs = new List<DocumentViewModel>();
+            DocumentViewModel NewDoc;
+            foreach (var item in UserDocs)
+            {
+                if (item.DocumentTypeId != (int)DocType.CurriculumVitae)
+                    continue;
+                NewDoc = new DocumentViewModel();
+                NewDoc.DocumentId = item.DocumentId;
+                NewDoc.DocumentDescription = item.DocumentDescription;
+                NewDoc.DocumentPath = item.DocumentLocation;
+                NewDoc.DocumentStatus = context.DocumentStatus.Where(DS => DS.DocumentStatusId == item.DocumentStatus).ToList().First().DocumentStatusDescription;
+                NewDoc.DocumentType = context.DocumentsTypes.Where(DT => DT.DocumentTypeId == item.DocumentTypeId).ToList().First().DocumentTypeDescription;
+
+                JobSeekerCVs.Add(NewDoc);
+            }
+
+            return JobSeekerCVs;
+        }
+
+        [Authorize(Roles = "JobSeeker")]
+        public PartialViewResult AddJobSeekerCV()
+        {
+            return PartialView("_AddJobSeekerCV", new DocumentViewModel());
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "JobSeeker")]
+        public ActionResult AddJobSeekerCV(DocumentViewModel model, HttpPostedFileBase UploadCurriculumVitae)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser();
+
+                user = manager.FindById(User.Identity.GetUserId());
+
+                if (UploadCurriculumVitae == null)
+                    return View("JobSeekerCVs", user.CareerFields);
+
+                if (ModelState.IsValid)
+                {
+                    var extintion = "";
+                    var filename = "";
+                    var userfolderpath = Server.MapPath("~/JobSeekersCurriculumVitae/" + user.Id);
+                    if (UploadCurriculumVitae != null)
+                    {
+                        extintion = Path.GetExtension(UploadCurriculumVitae.FileName);
+                        filename = Path.GetFileName(UploadCurriculumVitae.FileName);
+                        if (!new DirectoryInfo(userfolderpath).Exists)
+                            new DirectoryInfo(userfolderpath).Create();
+                        else
+                        {
+                            string[] files = System.IO.Directory.GetFiles(userfolderpath, string.Format("{0}", filename));
+                            if (files.Length > 0)
+                            {
+                                System.IO.File.Delete(files[0]);
+                            }
+                        }
+
+                        UploadCurriculumVitae.SaveAs(string.Format("{0}/{1}", userfolderpath, filename));
+
+                    }
+
+                    Document NewCurriculumVitae = new Document
+                    {
+                        DocumentDescription = model.DocumentDescription,
+                        DocumentLocation = string.Format("/JobSeekersCurriculumVitae/" + "{0}/{1}", user.Id, filename),
+                        DocumentStatus = (int)DocStatus.Pending,
+                        DocumentTypeId = (int)DocType.CurriculumVitae
+                    };
+
+                    user.Documents.Add(NewCurriculumVitae);
+                    Task.WaitAny(manager.UpdateAsync(user));
+
+                    Task.WaitAny(context.SaveChangesAsync());
+
+                    return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents));
+                }
+                return View("Index", user);
+            }
+        }
+
+        [Authorize(Roles = "JobSeeker")]
+        public ActionResult DeleteJobSeekerCV(int Id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser();
+
+                user = manager.FindById(User.Identity.GetUserId());
+                if (ModelState.IsValid)
+                {
+
+                    user.Documents.Remove(user.Documents.Where(cv => cv.DocumentId == Id).ToList().First());
+                    Task.WaitAny(manager.UpdateAsync(user));
+
+                    Task.WaitAny(context.SaveChangesAsync());
+                    return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents));
+                }
+                return View("Index", user);
+            }
+        }
+
+        [Authorize(Roles = "JobSeeker")]
+        public FileResult DownloadFile(string FilePath)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(FilePath));
+            string fileName = new FileInfo(Server.MapPath(FilePath)).Name;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }

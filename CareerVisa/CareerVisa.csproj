@@ -226,9 +226,14 @@
     <Compile Include="Migrations\201612241745362_CareerVisa_UpdateDatabase.Designer.cs">
       <DependentUpon>201612241745362_CareerVisa_UpdateDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612250904547_CarrerVisa_JobSeekerDocuments.cs" />
+    <Compile Include="Migrations\201612250904547_CarrerVisa_JobSeekerDocuments.Designer.cs">
+      <DependentUpon>201612250904547_CarrerVisa_JobSeekerDocuments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CareerVisaDBContext.cs" />
+    <Compile Include="Models\DocumentViewModel.cs" />
     <Compile Include="Models\Entities\CareerFields.cs" />
     <Compile Include="Models\Entities\Documents.cs" />
     <Compile Include="Models\Entities\DocumentStatus.cs" />
@@ -464,9 +469,12 @@
     <Content Include="Views\JobSeeker\EditProfile.cshtml" />
     <Content Include="Views\JobSeeker\CareerFields.cshtml" />
     <Content Include="Views\JobSeeker\_AddCareerField.cshtml" />
+    <Content Include="Views\JobSeeker\JobSeekerCVs.cshtml" />
+    <Content Include="Views\JobSeeker\_AddJobSeekerCV.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="JobSeekersCurriculumVitae\" />
     <Folder Include="UserProfilePictures\712ac26d-c5ea-4e37-8ba1-81abbee03219\" />
     <Folder Include="Views\Employeer\" />
   </ItemGroup>
@@ -486,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612241745362_CareerVisa_UpdateDatabase.resx">
       <DependentUpon>201612241745362_CareerVisa_UpdateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612250904547_CarrerVisa_JobSeekerDocuments.resx">
+      <DependentUpon>201612250904547_CarrerVisa_JobSeekerDocuments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
