@@ -25,8 +25,18 @@ namespace CareerVisa.Controllers
                 ApplicationUser user = new ApplicationUser();
 
                 user = manager.FindById(User.Identity.GetUserId());
+                ViewBag.CareerFieldsCount = user.CareerFields.Count;
+                ViewBag.JobSeekerCVs = GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae);
+                ViewBag.JobSeekerCoverLetters = GetDocumentViewModel(context, user.Documents, DocType.CoverLetters);
+                ViewBag.UserFullName = string.Format("{0} {1}", user.FirstName, user.Lastname);
 
-                ViewBag.JobSeekerCVs = GetDocumentViewModel(context, user.Documents);
+                string profilePicturePath = string.Format("/UserProfilePictures/{0}", user.PersonalPhotoPath);
+                FileInfo profilePicFile = new FileInfo(Server.MapPath(profilePicturePath));
+                if (!profilePicFile.Exists)
+                {
+                    profilePicturePath = "/Images/default-profile-picture.jpg";
+                }
+                ViewBag.UserPicURL = profilePicturePath;
 
                 return View(user);
             }
@@ -170,19 +180,19 @@ namespace CareerVisa.Controllers
                 ApplicationUser currentUser = new ApplicationUser();
 
                 currentUser = manager.FindById(User.Identity.GetUserId());
-                List<DocumentViewModel> JobSeekerCVs = GetDocumentViewModel(context, currentUser.Documents);
+                List<DocumentViewModel> JobSeekerCVs = GetDocumentViewModel(context, currentUser.Documents, DocType.CurriculumVitae);
                 return View(JobSeekerCVs);
             }
 
         }
 
-        private static List<DocumentViewModel> GetDocumentViewModel(ApplicationDbContext context, ICollection<Document> UserDocs)
+        private static List<DocumentViewModel> GetDocumentViewModel(ApplicationDbContext context, ICollection<Document> UserDocs, DocType DocumentType)
         {
             List<DocumentViewModel> JobSeekerCVs = new List<DocumentViewModel>();
             DocumentViewModel NewDoc;
             foreach (var item in UserDocs)
             {
-                if (item.DocumentTypeId != (int)DocType.CurriculumVitae)
+                if (item.DocumentTypeId != (int)DocumentType)
                     continue;
                 NewDoc = new DocumentViewModel();
                 NewDoc.DocumentId = item.DocumentId;
@@ -216,7 +226,7 @@ namespace CareerVisa.Controllers
                 user = manager.FindById(User.Identity.GetUserId());
 
                 if (UploadCurriculumVitae == null)
-                    return View("JobSeekerCVs", user.CareerFields);
+                    return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
 
                 if (ModelState.IsValid)
                 {
@@ -255,7 +265,7 @@ namespace CareerVisa.Controllers
 
                     Task.WaitAny(context.SaveChangesAsync());
 
-                    return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents));
+                    return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
                 }
                 return View("Index", user);
             }
@@ -273,12 +283,19 @@ namespace CareerVisa.Controllers
                 user = manager.FindById(User.Identity.GetUserId());
                 if (ModelState.IsValid)
                 {
+                    var DeletedDocument = user.Documents.Where(cv => cv.DocumentId == Id).ToList().First();
+                    string DocumentPath = DeletedDocument.DocumentLocation;
 
-                    user.Documents.Remove(user.Documents.Where(cv => cv.DocumentId == Id).ToList().First());
+                    context.Documents.Remove(user.Documents.Where(cv => cv.DocumentId == Id).ToList().First());
                     Task.WaitAny(manager.UpdateAsync(user));
 
                     Task.WaitAny(context.SaveChangesAsync());
-                    return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents));
+
+                    var DocPhysicalPath = Server.MapPath("~" + DocumentPath);
+                    FileInfo file = new FileInfo(DocPhysicalPath);
+                    file.Delete();
+
+                    return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
                 }
                 return View("Index", user);
             }
@@ -290,6 +307,129 @@ namespace CareerVisa.Controllers
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(FilePath));
             string fileName = new FileInfo(Server.MapPath(FilePath)).Name;
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+
+        ////////////////////////////////////Cover letters ///////////////////////////////
+        public ActionResult JobSeekerCoverLetters()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser currentUser = new ApplicationUser();
+
+                currentUser = manager.FindById(User.Identity.GetUserId());
+                List<DocumentViewModel> JobSeekerCoverLetters = GetDocumentViewModel(context, currentUser.Documents, DocType.CoverLetters);
+                return View(JobSeekerCoverLetters);
+            }
+
+        }
+
+        [Authorize(Roles = "JobSeeker")]
+        public PartialViewResult AddJobSeekerCoverLetter()
+        {
+            return PartialView("_AddJobSeekerCoverLetter", new DocumentViewModel());
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "JobSeeker")]
+        public ActionResult AddJobSeekerCoverLetter(DocumentViewModel model, HttpPostedFileBase UploadCoverLetter)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser();
+
+                user = manager.FindById(User.Identity.GetUserId());
+
+                if (UploadCoverLetter == null)
+                    return View("JobSeekerCoverLetters", GetDocumentViewModel(context, user.Documents, DocType.CoverLetters));
+
+                if (ModelState.IsValid)
+                {
+                    var extintion = "";
+                    var filename = "";
+                    var userfolderpath = Server.MapPath("~/JobSeekersCoverLetter/" + user.Id);
+                    if (UploadCoverLetter != null)
+                    {
+                        extintion = Path.GetExtension(UploadCoverLetter.FileName);
+                        filename = Path.GetFileName(UploadCoverLetter.FileName);
+                        if (!new DirectoryInfo(userfolderpath).Exists)
+                            new DirectoryInfo(userfolderpath).Create();
+                        else
+                        {
+                            string[] files = System.IO.Directory.GetFiles(userfolderpath, string.Format("{0}", filename));
+                            if (files.Length > 0)
+                            {
+                                System.IO.File.Delete(files[0]);
+                            }
+                        }
+
+                        UploadCoverLetter.SaveAs(string.Format("{0}/{1}", userfolderpath, filename));
+
+                    }
+
+                    Document NewCoverLetter = new Document
+                    {
+                        DocumentDescription = model.DocumentDescription,
+                        DocumentLocation = string.Format("/JobSeekersCoverLetter/" + "{0}/{1}", user.Id, filename),
+                        DocumentStatus = (int)DocStatus.Pending,
+                        DocumentTypeId = (int)DocType.CoverLetters
+                    };
+
+                    user.Documents.Add(NewCoverLetter);
+                    Task.WaitAny(manager.UpdateAsync(user));
+
+                    Task.WaitAny(context.SaveChangesAsync());
+
+                    return View("JobSeekerCoverLetters", GetDocumentViewModel(context, user.Documents, DocType.CoverLetters));
+                }
+                return View("Index", user);
+            }
+        }
+
+        [Authorize(Roles = "JobSeeker")]
+        public ActionResult DeleteJobSeekerCoverLetter(int Id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                ApplicationUser user = new ApplicationUser();
+
+                user = manager.FindById(User.Identity.GetUserId());
+                if (ModelState.IsValid)
+                {
+                    var DeletedDocument = user.Documents.Where(cv => cv.DocumentId == Id).ToList().First();
+                    string DocumentPath = DeletedDocument.DocumentLocation;
+
+                    context.Documents.Remove(DeletedDocument);
+                    Task.WaitAny(manager.UpdateAsync(user));
+
+                    Task.WaitAny(context.SaveChangesAsync());
+
+                    var DocPhysicalPath = Server.MapPath("~" + DocumentPath);
+                    FileInfo file = new FileInfo(DocPhysicalPath);
+                    file.Delete();
+
+                    return View("JobSeekerCoverLetters", GetDocumentViewModel(context, user.Documents, DocType.CoverLetters));
+                }
+                return View("Index", user);
+            }
+        }
+
+        [Authorize(Roles = "JobSeeker")]
+        public ActionResult CVBuilder()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "JobSeeker")]
+        public ActionResult ReviewReports()
+        {
+            return View();
         }
     }
 }

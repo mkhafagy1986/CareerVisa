@@ -40,7 +40,7 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
+                @*<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu message-dropdown">
                         <li class="message-preview">
@@ -128,22 +128,22 @@
                             <a href="#">View All</a>
                         </li>
                     </ul>
-                </li>
+                </li>*@
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> @ViewBag.UserFullName <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="@Url.Action("Index", "JobSeeker")"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
+                        @*<li>
+                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            </li>*@
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="@Url.Action("LogOff", "Account")"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -167,6 +167,10 @@
                     @{ url = Url.Action("JobSeekerCVs", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
                         <a href="@Url.Action("JobSeekerCVs", "JobSeeker")"><i class="fa fa-fw fa-cogs"></i> CV Managment</a>
+                    </li>
+                    @{ url = Url.Action("JobSeekerCoverLetters", "JobSeeker"); }
+                    <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
+                        <a href="@Url.Action("JobSeekerCoverLetters", "JobSeeker")"><i class="fa fa-fw fa-envelope-o "></i> Cover Letter Managment</a>
                     </li>
                     @{ url = Url.Action("CVBuilder", "JobSeeker"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">

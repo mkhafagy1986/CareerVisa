@@ -12,7 +12,7 @@
 <div>
     <br />
     <h2 style="padding-left: 20px;">Please Select Curriculum vitae Document</h2><br />
-    @using (Html.BeginForm("AddJobSeekerCV", "JobSeeker", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddJobSeekerCoverLetter", "JobSeeker", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -22,7 +22,7 @@
             <div class="form-group  wow fadeInDown animated">
                 @Html.LabelFor(model => model.DocumentPath, htmlAttributes: new { @class = "col-lg-3 control-label" })
                 <div class="col-md-7">
-                    <input type="file" class="form-control" name="UploadCurriculumVitae" id="UploadCurriculumVitae">
+                    <input type="file" class="form-control" name="UploadCoverLetter" id="UploadCoverLetter">
                 </div>
             </div>
 

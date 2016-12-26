@@ -28,13 +28,21 @@ else
                 <div class="col-md-12 text-center">
                     @if (!User.IsInRole("Employer"))
                     {
-                        <a class="btn btn-border btn-lg wow fadeInRight animated" data-wow-offset="10" href="@Url.Action("Index", "Employer")" style="display: none;"><i class="fa fa-briefcase"></i>Employer</a>
-                        <a class="btn btn-border btn-lg wow fadeInLeft animated" data-wow-offset="10" href="@Url.Action("Index", "JobSeeker")"><i class="fa fa-graduation-cap"></i> Job Seeker</a>
+                        <div style="display: none !important;">
+                            <a class="btn btn-border btn-lg wow fadeInRight animated" data-wow-offset="10" href="@Url.Action("Index", "Employer")"><i class="fa fa-briefcase"></i>Employer</a>
+                        </div>
+                        <div>
+                            <a class="btn btn-border btn-lg wow fadeInLeft animated" data-wow-offset="10" href="@Url.Action("Index", "JobSeeker")"><i class="fa fa-graduation-cap"></i> Job Seeker</a>
+                        </div>
                     }
                     else if (User.IsInRole("JobSeeker"))
                     {
-                        <a class="btn btn-border btn-lg wow fadeInRight animated" data-wow-offset="10" href="@Url.Action("Index", "Employer")"><i class="fa fa-briefcase"></i>Employer</a>
-                        <a class="btn btn-border btn-lg wow fadeInLeft animated" data-wow-offset="10" href="@Url.Action("Index", "JobSeeker")" style="display: none;"><i class="fa fa-graduation-cap"></i> Job Seeker</a>
+                        <div>
+                            <a class="btn btn-border btn-lg wow fadeInRight animated" data-wow-offset="10" href="@Url.Action("Index", "Employer")"><i class="fa fa-briefcase"></i>Employer</a>
+                        </div>
+                        <div style="display: none !important;">
+                            <a class="btn btn-border btn-lg wow fadeInLeft animated" data-wow-offset="10" href="@Url.Action("Index", "JobSeeker")"><i class="fa fa-graduation-cap"></i> Job Seeker</a>
+                        </div>
                     }
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
