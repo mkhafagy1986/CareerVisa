@@ -28,15 +28,7 @@ namespace CareerVisa.Controllers
                 ViewBag.CareerFieldsCount = user.CareerFields.Count;
                 ViewBag.JobSeekerCVs = GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae);
                 ViewBag.JobSeekerCoverLetters = GetDocumentViewModel(context, user.Documents, DocType.CoverLetters);
-                ViewBag.UserFullName = string.Format("{0} {1}", user.FirstName, user.Lastname);
-
-                string profilePicturePath = string.Format("/UserProfilePictures/{0}", user.PersonalPhotoPath);
-                FileInfo profilePicFile = new FileInfo(Server.MapPath(profilePicturePath));
-                if (!profilePicFile.Exists)
-                {
-                    profilePicturePath = "/Images/default-profile-picture.jpg";
-                }
-                ViewBag.UserPicURL = profilePicturePath;
+                SetUserFullName(user);
 
                 return View(user);
             }
@@ -49,6 +41,7 @@ namespace CareerVisa.Controllers
 
             // Get the current logged in User and look up the user in ASP.NET Identity
             var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
 
             return View(currentUser);
         }
@@ -101,6 +94,8 @@ namespace CareerVisa.Controllers
                     Task.WaitAny(manager.UpdateAsync(user));
 
                     Task.WaitAny(context.SaveChangesAsync());
+                    SetUserFullName(user);
+
                     return RedirectToAction("Index", "JobSeeker");
                 }
             }
@@ -114,6 +109,7 @@ namespace CareerVisa.Controllers
 
             // Get the current logged in User and look up the user in ASP.NET Identity
             var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
 
             return View(currentUser.CareerFields);
         }
@@ -121,7 +117,18 @@ namespace CareerVisa.Controllers
         [Authorize(Roles = "JobSeeker")]
         public PartialViewResult AddCareerField()
         {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            // Get the current logged in User and look up the user in ASP.NET Identity
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
+
             return PartialView("_AddCareerField", new CareerField());
+        }
+
+        private void SetUserFullName(ApplicationUser currentUser)
+        {
+            ViewBag.UserFullName = string.Format("{0} {1}", currentUser.FirstName, currentUser.Lastname);
         }
 
         [HttpPost]
@@ -142,8 +149,11 @@ namespace CareerVisa.Controllers
                     Task.WaitAny(manager.UpdateAsync(user));
 
                     Task.WaitAny(context.SaveChangesAsync());
+
                     return View("CareerFields", user.CareerFields);
                 }
+                SetUserFullName(user);
+
                 return View("Index", user);
             }
         }
@@ -165,8 +175,12 @@ namespace CareerVisa.Controllers
                     Task.WaitAny(manager.UpdateAsync(user));
 
                     Task.WaitAny(context.SaveChangesAsync());
+                    ViewBag.UserFullName = string.Format("{0} {1}", user.FirstName, user.Lastname);
+
                     return View("CareerFields", user.CareerFields);
                 }
+                SetUserFullName(user);
+
                 return View("Index", user);
             }
         }
@@ -181,6 +195,8 @@ namespace CareerVisa.Controllers
 
                 currentUser = manager.FindById(User.Identity.GetUserId());
                 List<DocumentViewModel> JobSeekerCVs = GetDocumentViewModel(context, currentUser.Documents, DocType.CurriculumVitae);
+                SetUserFullName(currentUser);
+
                 return View(JobSeekerCVs);
             }
 
@@ -210,6 +226,12 @@ namespace CareerVisa.Controllers
         [Authorize(Roles = "JobSeeker")]
         public PartialViewResult AddJobSeekerCV()
         {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            // Get the current logged in User and look up the user in ASP.NET Identity
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
+
             return PartialView("_AddJobSeekerCV", new DocumentViewModel());
         }
 
@@ -264,6 +286,7 @@ namespace CareerVisa.Controllers
                     Task.WaitAny(manager.UpdateAsync(user));
 
                     Task.WaitAny(context.SaveChangesAsync());
+                    SetUserFullName(user);
 
                     return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
                 }
@@ -294,6 +317,7 @@ namespace CareerVisa.Controllers
                     var DocPhysicalPath = Server.MapPath("~" + DocumentPath);
                     FileInfo file = new FileInfo(DocPhysicalPath);
                     file.Delete();
+                    SetUserFullName(user);
 
                     return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
                 }
@@ -321,6 +345,8 @@ namespace CareerVisa.Controllers
 
                 currentUser = manager.FindById(User.Identity.GetUserId());
                 List<DocumentViewModel> JobSeekerCoverLetters = GetDocumentViewModel(context, currentUser.Documents, DocType.CoverLetters);
+                SetUserFullName(currentUser);
+
                 return View(JobSeekerCoverLetters);
             }
 
@@ -329,6 +355,12 @@ namespace CareerVisa.Controllers
         [Authorize(Roles = "JobSeeker")]
         public PartialViewResult AddJobSeekerCoverLetter()
         {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            // Get the current logged in User and look up the user in ASP.NET Identity
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
+
             return PartialView("_AddJobSeekerCoverLetter", new DocumentViewModel());
         }
 
@@ -383,9 +415,12 @@ namespace CareerVisa.Controllers
                     Task.WaitAny(manager.UpdateAsync(user));
 
                     Task.WaitAny(context.SaveChangesAsync());
+                    SetUserFullName(user);
 
                     return View("JobSeekerCoverLetters", GetDocumentViewModel(context, user.Documents, DocType.CoverLetters));
                 }
+                SetUserFullName(user);
+
                 return View("Index", user);
             }
         }
@@ -413,9 +448,12 @@ namespace CareerVisa.Controllers
                     var DocPhysicalPath = Server.MapPath("~" + DocumentPath);
                     FileInfo file = new FileInfo(DocPhysicalPath);
                     file.Delete();
+                    SetUserFullName(user);
 
                     return View("JobSeekerCoverLetters", GetDocumentViewModel(context, user.Documents, DocType.CoverLetters));
                 }
+                SetUserFullName(user);
+
                 return View("Index", user);
             }
         }
@@ -423,12 +461,24 @@ namespace CareerVisa.Controllers
         [Authorize(Roles = "JobSeeker")]
         public ActionResult CVBuilder()
         {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            // Get the current logged in User and look up the user in ASP.NET Identity
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
+
             return View();
         }
 
         [Authorize(Roles = "JobSeeker")]
         public ActionResult ReviewReports()
         {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            // Get the current logged in User and look up the user in ASP.NET Identity
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
+
             return View();
         }
 
@@ -439,6 +489,7 @@ namespace CareerVisa.Controllers
 
             // Get the current logged in User and look up the user in ASP.NET Identity
             var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
 
             return View(currentUser);
         }

@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CareerVisa.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Configuration;
 
 namespace CareerVisa.Controllers
 {
@@ -32,9 +34,9 @@ namespace CareerVisa.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -101,9 +103,17 @@ namespace CareerVisa.Controllers
 
         //
         // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
+        public ActionResult AddPhoneNumber(string PhoneNumber)
         {
-            return View();
+            AddPhoneNumberViewModel phonenumbermodel = new AddPhoneNumberViewModel();
+            phonenumbermodel.Number = PhoneNumber;
+
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
+
+            return View(phonenumbermodel);
         }
 
         //
@@ -120,9 +130,11 @@ namespace CareerVisa.Controllers
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             if (UserManager.SmsService != null)
             {
+                string PhoneNumber = model.Number;
                 var message = new IdentityMessage
                 {
-                    Destination = model.Number,
+                    
+                    Destination = ConfigurationManager.AppSettings["CountryCode"] + PhoneNumber.Substring(1),
                     Body = "Your security code is: " + code
                 };
                 await UserManager.SmsService.SendAsync(message);
@@ -333,7 +345,12 @@ namespace CareerVisa.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        private void SetUserFullName(ApplicationUser currentUser)
+        {
+            ViewBag.UserFullName = string.Format("{0} {1}", currentUser.FirstName, currentUser.Lastname);
+        }
+
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +401,6 @@ namespace CareerVisa.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

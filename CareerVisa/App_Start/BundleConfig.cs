@@ -71,7 +71,10 @@ namespace CareerVisa
 
             bundles.Add(new ScriptBundle("~/bundles/scriptsdashboard").Include(
                       //"~/Scripts/jquery.js",
-                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/respond.js",
+                      //"~/Scripts/bootstrap.min.js",
+                      "~/Scripts/wow.js",
                       "~/Scripts/plugins/morris/raphael.min.js",
                       "~/Scripts/plugins/morris/morris.min.js",
                       "~/Scripts/plugins/morris/morris-data.js",

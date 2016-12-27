@@ -28,10 +28,9 @@
 
             <!-- edit form column -->
             <div class="col-md-9 personal-info">
-                <div class="alert alert-info alert-dismissable">
+                <div id="validationsummary"  class="alert alert-info alert-dismissable" style="text-align:left !important;">
                     <a class="panel-close close" data-dismiss="alert">×</a>
-                    @*<i class="fa fa-coffee"></i>*@
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.ValidationSummary()
                 </div>
                 <h3>Personal info</h3>
 
@@ -90,3 +89,8 @@
         </div>
     </div>
 }
+<script>
+$(document).ready(function(){
+    $("div.validation-summary-valid").parent().hide();
+});
+</script>
