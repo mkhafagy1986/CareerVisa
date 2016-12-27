@@ -475,6 +475,7 @@
     <Content Include="Views\JobSeeker\JobSeekerCoverletters.cshtml" />
     <Content Include="Views\JobSeeker\CVBuilder.cshtml" />
     <Content Include="Views\JobSeeker\ReviewReports.cshtml" />
+    <Content Include="Views\JobSeeker\ViewProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

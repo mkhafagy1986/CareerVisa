@@ -431,5 +431,16 @@ namespace CareerVisa.Controllers
         {
             return View();
         }
+
+        [Authorize(Roles = "JobSeeker")]
+        public ViewResult ViewProfile()
+        {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            // Get the current logged in User and look up the user in ASP.NET Identity
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+
+            return View(currentUser);
+        }
     }
 }

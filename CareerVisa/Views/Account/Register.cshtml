@@ -10,18 +10,16 @@
 
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>Bootstrap</strong> Login &amp; Register Forms</h1>
+                    <h1><strong>Career Visa</strong> Registration Form</h1>
                     <div class="description">
                         <p>
-                            This is a free responsive <strong>"login and register forms"</strong> template made with Bootstrap.
-                            Download it on <a href="http://azmind.com" target="_blank"><strong>AZMIND</strong></a>,
-                            customize and use it as you like!
+                            Career Visa is a web-based platform that will give youth the visa to their future career
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                @Html.ValidationSummary("", new { @class = "alert alert-info alert-dismissable", style = "text-align:left !important;" })
+            <div id="validationsummary" class="row alert alert-info alert-dismissable" style = "text-align:left !important;">
+                @Html.ValidationSummary()
             </div>
             <div class="row">
                 <div class="col-sm-5">
@@ -99,7 +97,7 @@
                         </div>
                         <div class="form-bottom">
                             @*<form role="form" action="" method="post" class="registration-form">*@
-                            @using (Html.BeginForm("RegisterJobseeker", "Account", FormMethod.Post, new { @class = "login-form", role = "form" }))
+                            @using (Html.BeginForm("RegisterJobseeker", "Account", FormMethod.Post, new { @class = "login-form", role = "form", id="RegisterationForm" }))
             {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group wow fadeInDown animated">
@@ -160,8 +158,8 @@
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="footer-border"></div>
                 <p>
-                    Made by Anli Zaimi at <a href="http://azmind.com" target="_blank"><strong>AZMIND</strong></a>
-                    having a lot of fun. <i class="fa fa-smile-o"></i>
+                    Powered by <a href="http://businessinnovators.com.eg" target="_blank"><strong>Business Innovators</strong></a>
+                    Innovation exceeds expectations. <i class="fa fa-trademark"></i>
                 </p>
             </div>
 
@@ -172,3 +170,9 @@
 @section DefaultscriptBundle{
     @Scripts.Render("~/bundles/scriptsRegistration")
 }
+
+<script>
+$(document).ready(function(){
+    $("div.validation-summary-valid").parent().hide();
+});
+</script>
