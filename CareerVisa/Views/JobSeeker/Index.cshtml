@@ -31,7 +31,15 @@
                     <div class="profile_img">
                         <div id="crop-avatar">
                             <!-- Current avatar -->
-                            <img class="img-responsive avatar-view" style="height: 204px;width: 204px" src="~/UserProfilePictures/@Model.PersonalPhotoPath" alt="Avatar" title="Change the avatar">
+                            @{
+                                string profilePicturePath = string.Format("/UserProfilePictures/{0}", Model.PersonalPhotoPath);
+                                FileInfo profilePicFile = new FileInfo(Server.MapPath(profilePicturePath));
+                                if (!profilePicFile.Exists)
+                                {
+                                    profilePicturePath = "/Images/default-profile-picture.jpg";
+                                }
+                            }
+                            <img class="img-responsive avatar-view" style="height: 204px;width: 204px" src=@profilePicturePath alt="Avatar" title="Change the avatar">
                         </div>
                     </div>
                     <h3>@Model.FirstName @Model.Lastname</h3>
