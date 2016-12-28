@@ -28,6 +28,7 @@ namespace CareerVisa.Models
 
         [Required]
         [StringLength(15)]
+        [RegularExpression(@"^(\d{11})$", ErrorMessage = "Please enter a valid phone number.")]
         public string PhoneNumber { get; set; }
     }
 }

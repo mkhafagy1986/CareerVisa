@@ -33,6 +33,9 @@
         <nav class="navbar navbar-default">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header col-lg-2">
+                    <img style="height: 70px;width: 120px" src="~/images/logo.png" alt="logo">
+                </div>
                 <div class="navbar-header col-md-3">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -40,7 +43,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="@Url.Action("Index", "Home")" class = "navbar-brand fa fa-fa fa-cubes">Career Visa</a>
+                    <strong>
+                        <a href="@Url.Action("Index", "Home")" class="navbar-brand" style="margin-top:10px;">Career Visa</a>
+                    </strong>
+
                     @*@Html.ActionLink("Career Visa", "Index", "Home", new { @class = "navbar-brand fa fa-fa fa-cubes" })*@
                 </div>
 

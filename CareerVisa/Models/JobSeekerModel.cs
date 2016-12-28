@@ -27,11 +27,12 @@ namespace CareerVisa.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The Password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
         [StringLength(15)]
+        [RegularExpression(@"^(\d{11})$", ErrorMessage = "Please enter a valid phone number.")]
         public string PhoneNumber { get; set; }
     }
 }

@@ -5,7 +5,40 @@
     ViewBag.Title = "About";
 }
 
-<h2>About</h2>
+@*<h2 class="FeaturesHeaderh1h2">About <strong>Career Visa</strong></h2>*@
+<section id="key-features">
+    <div class="se-pre-con"></div>
+</section>
+<!-- feature Section End -->
+<!-- feature-list Section -->
+<section id="main-features">
+    <div class="se-pre-con"></div>
+</section>
+<!-- feature-list Section End -->
+
+<script>
+    $.ajax({
+        // Get Student PartialView
+        url: "/Home/Features",
+        type: 'Get',
+        data: null,
+        success: function (data) {
+            $("#key-features").empty().append(data);
+            new WOW().init();
+        },
+        error: function () {
+            alert("something seems wrong");
+        }
+    });
+
+    $(function () {
+        $.get("/Home/Functionality", null, function (data) {
+            $("#main-features").empty().append(data);
+            new WOW().init();
+
+        });
+    });
+</script>
 @section DefaultscriptBundle{
     @Scripts.Render("~/bundles/scripts")
 }

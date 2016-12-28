@@ -1,9 +1,9 @@
 ﻿@model CareerVisa.Models.VerifyPhoneNumberViewModel
 @{
-    ViewBag.Title = "Verify Phone Number";
+    ViewBag.DashBoardTitle = "CareerVisa - JobSeeker - View Profile";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
 }
 
-<h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("VerifyPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -25,9 +25,9 @@
         </div>
     </div>
 }
-@section DefaultscriptBundle{
+@*@section DefaultscriptBundle{
     @Scripts.Render("~/bundles/scripts")
-}
+}*@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

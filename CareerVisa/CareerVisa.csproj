@@ -281,6 +281,7 @@
     <Content Include="images\features\cv_image.png" />
     <Content Include="images\inbox.png" />
     <Content Include="images\loading.gif" />
+    <Content Include="images\logo.png" />
     <Content Include="images\open_mail_letter-512.png" />
     <Content Include="index.html" />
     <Content Include="OriginalFileUploader.html" />
@@ -305,6 +306,8 @@
     <Content Include="Scripts\jquery.backstretch.js" />
     <Content Include="Scripts\jquery.backstretch.min.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.maskedinput.js" />
+    <Content Include="Scripts\jquery.maskedinput.min.js" />
     <Content Include="Scripts\locales\ar.js" />
     <Content Include="Scripts\locales\bg.js" />
     <Content Include="Scripts\locales\ca.js" />
@@ -458,7 +461,6 @@
     <Content Include="Views\Home\_Features.cshtml" />
     <Content Include="Views\Home\_Functionality.cshtml" />
     <Content Include="Views\Home\FunctionalityDetails.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
@@ -476,6 +478,7 @@
     <Content Include="Views\JobSeeker\CVBuilder.cshtml" />
     <Content Include="Views\JobSeeker\ReviewReports.cshtml" />
     <Content Include="Views\JobSeeker\ViewProfile.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

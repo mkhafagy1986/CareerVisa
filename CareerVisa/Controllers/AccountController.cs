@@ -141,7 +141,7 @@ namespace CareerVisa.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-                return View();
+            return View();
         }
 
         [Authorize]
@@ -155,64 +155,104 @@ namespace CareerVisa.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterJobseeker(RegisterationViewModel model)
+        public async Task<ActionResult> Register(RegisterationViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var JobSeekerObj = model.JobSeeker;
-                var user = new ApplicationUser { UserName = JobSeekerObj.Email, Email = JobSeekerObj.Email, FirstName = JobSeekerObj.FirstName, Lastname = JobSeekerObj.LastName, PhoneNumber = JobSeekerObj.PhoneNumber };
+                var user = new ApplicationUser
+                {
+                    UserName = JobSeekerObj.Email,
+                    Email = JobSeekerObj.Email,
+                    FirstName = JobSeekerObj.FirstName,
+                    Lastname = JobSeekerObj.LastName,
+                    PhoneNumber = JobSeekerObj.PhoneNumber
+                };
                 var result = await UserManager.CreateAsync(user, JobSeekerObj.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, JobSeekerObj.FirstName));
+                    if (model.RegistrationType == 0)
+                    {
+                        UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, JobSeekerObj.FirstName));
+                        UserManager.AddToRole(user.Id, "JobSeeker");
+                    }
+                    else
+                    {
+                        UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, JobSeekerObj.FirstName));
+                        UserManager.AddToRole(user.Id, "Employer");
 
-                    UserManager.AddToRole(user.Id, "JobSeeker");
+                    }
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", string.Format("Please confirm your account by clicking <a href=\"{0}\">here</a>", callbackUrl));
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                        protocol: Request.Url.Scheme);
+                    await
+                        UserManager.SendEmailAsync(user.Id, "Confirm your account",
+                            string.Format("Please confirm your account by clicking <a href=\"{0}\">here</a>",
+                                callbackUrl));
 
                     return RedirectToAction("RegisterConfirmation", "Account");
                 }
                 AddErrors(result);
-            }
+                //if (model.RegistrationType == 0)
+                //{
+                //    var JobSeekerObj = model.JobSeeker;
+                //    var user = new ApplicationUser
+                //    {
+                //        UserName = JobSeekerObj.Email,
+                //        Email = JobSeekerObj.Email,
+                //        FirstName = JobSeekerObj.FirstName,
+                //        Lastname = JobSeekerObj.LastName,
+                //        PhoneNumber = JobSeekerObj.PhoneNumber
+                //    };
+                //    var result = await UserManager.CreateAsync(user, JobSeekerObj.Password);
+                //    if (result.Succeeded)
+                //    {
+                //        UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, JobSeekerObj.FirstName));
 
-            // If we got this far, something failed, redisplay form
-            return View("Register", model);
-        }
+                //        UserManager.AddToRole(user.Id, "JobSeeker");
+                //        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-        //
-        // POST: /Account/RegisterEmployer
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterEmployer(RegisterationViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var EmployerObj = model.Employer;
-                var user = new ApplicationUser { UserName = EmployerObj.Email, Email = EmployerObj.Email, FirstName = EmployerObj.Name, Lastname = "Employer", PhoneNumber = EmployerObj.PhoneNumber };
-                var result = await UserManager.CreateAsync(user, EmployerObj.Password);
-                if (result.Succeeded)
-                {
-                    UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, EmployerObj.Name));
+                //        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                //        // Send an email with this link
+                //        string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                //        var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = code},
+                //            protocol: Request.Url.Scheme);
+                //        await
+                //            UserManager.SendEmailAsync(user.Id, "Confirm your account",
+                //                string.Format("Please confirm your account by clicking <a href=\"{0}\">here</a>",
+                //                    callbackUrl));
 
-                    UserManager.AddToRole(user.Id, "Employer");
+                //        return RedirectToAction("RegisterConfirmation", "Account");
+                //    }
+                //    AddErrors(result);
+                //}
+                //else
+                //{
+                //    var EmployerObj = model.Employer;
+                //    var user = new ApplicationUser { UserName = EmployerObj.Email, Email = EmployerObj.Email, FirstName = EmployerObj.Name, Lastname = "Employer", PhoneNumber = EmployerObj.PhoneNumber };
+                //    var result = await UserManager.CreateAsync(user, EmployerObj.Password);
+                //    if (result.Succeeded)
+                //    {
+                //        UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, EmployerObj.Name));
 
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                //        UserManager.AddToRole(user.Id, "Employer");
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your career visa account", string.Format("Thank you for signing up to career visa portal! <br/>Please confirm your account by clicking <a href=\"{0}\">here</a> <br/>Love,<br/>Career Visa team", callbackUrl));
+                //        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    return RedirectToAction("RegisterConfirmation", "Account");
-                }
-                AddErrors(result);
+                //        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                //        // Send an email with this link
+                //        string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                //        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //        await UserManager.SendEmailAsync(user.Id, "Confirm your career visa account", string.Format("Thank you for signing up to career visa portal! <br/>Please confirm your account by clicking <a href=\"{0}\">here</a> <br/>Love,<br/>Career Visa team", callbackUrl));
+
+                //        return RedirectToAction("RegisterConfirmation", "Account");
+                //    }
+                //    AddErrors(result);
+                //}
             }
 
             // If we got this far, something failed, redisplay form
@@ -497,7 +537,7 @@ namespace CareerVisa.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-        
+
         internal class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri)

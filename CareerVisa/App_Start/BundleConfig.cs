@@ -10,6 +10,7 @@ namespace CareerVisa
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.maskedinput.min.js",
                         "~/Scripts/jquery.backstretch.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

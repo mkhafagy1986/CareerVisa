@@ -16,6 +16,7 @@ using System.Net;
 using System.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.IO;
 
 namespace CareerVisa
 {
@@ -59,8 +60,26 @@ namespace CareerVisa
             //Status is one of Queued, Sending, Sent, Failed or null if the number is not valid
             Trace.TraceInformation(result.Status);
             //Twilio doesn't currently have an async API, so return success.
+            //SendSMS(message.Destination, message.Body);
             return Task.FromResult(0);
             // Twilio End
+        }
+
+        public string SendSMS(string PhoneNumber, string MessageText)
+        {
+            string ServiceURL =
+                String.Format(
+                    "http://tawasol.ksu.edu.sa/tawasol_api/sendSMS?hash=51f5a11f9e978222f917d84c73321bce&message={0}=test&mobile={1}",
+                    MessageText, PhoneNumber);
+
+            Uri serviceUri = new Uri(ServiceURL);
+            WebRequest objWebRequest = WebRequest.Create(serviceUri);
+            WebResponse objWebResponse = objWebRequest.GetResponse();
+
+            Stream objStream = objWebResponse.GetResponseStream();
+            StreamReader objStreamReader = new StreamReader(objStream);
+            string strHTML = objStreamReader.ReadToEnd();
+            return strHTML;
         }
     }
 

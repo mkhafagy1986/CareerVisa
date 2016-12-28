@@ -187,6 +187,11 @@ namespace CareerVisa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
         {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            SetUserFullName(currentUser);
+
             if (!ModelState.IsValid)
             {
                 return View(model);
