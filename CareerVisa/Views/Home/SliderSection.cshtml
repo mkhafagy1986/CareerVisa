@@ -26,7 +26,7 @@ else
             <div class="row">
                 <h1 class="title-small wow tada">Career Visa Key Players</h1>
                 <div class="col-md-12 text-center">
-                    @if (!User.IsInRole("Employer"))
+                    @if (User.IsInRole("JobSeeker"))
                     {
                         <div style="display: none !important;">
                             <a class="btn btn-border btn-lg wow fadeInRight animated" data-wow-offset="10" href="@Url.Action("Index", "Employer")"><i class="fa fa-briefcase"></i>Employer</a>
@@ -35,7 +35,7 @@ else
                             <a class="btn btn-border btn-lg wow fadeInLeft animated" data-wow-offset="10" href="@Url.Action("Index", "JobSeeker")"><i class="fa fa-graduation-cap"></i> Job Seeker</a>
                         </div>
                     }
-                    else if (User.IsInRole("JobSeeker"))
+                    else if (User.IsInRole("Employer"))
                     {
                         <div>
                             <a class="btn btn-border btn-lg wow fadeInRight animated" data-wow-offset="10" href="@Url.Action("Index", "Employer")"><i class="fa fa-briefcase"></i>Employer</a>

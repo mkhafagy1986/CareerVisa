@@ -398,6 +398,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
+    <Content Include="JobSeekersCoverLetter\712ac26d-c5ea-4e37-8ba1-81abbee03219\Pulse_EULA.docx" />
     <None Include="Properties\PublishProfiles\CareerVisa.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

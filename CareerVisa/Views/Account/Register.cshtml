@@ -120,7 +120,8 @@
 </footer>
 
 @section DefaultscriptBundle{
-    @Scripts.Render("~/bundles/scriptsRegistration")
+    @Scripts.Render("~/bundles/scriptsRegistration") 
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
 <script>
@@ -128,7 +129,7 @@
         $("div.validation-summary-valid").parent().hide();
         
         //$("#jobseekerphonenumber").mask("(999) 999-99999");
-           
+         
         $('#ddlRegistrationType')
             .change(function () {
                 var registrationtype = $('#ddlRegistrationType').val();
