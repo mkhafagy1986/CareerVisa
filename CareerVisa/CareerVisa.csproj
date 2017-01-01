@@ -249,6 +249,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="1Registration.html" />
+    <Content Include="2EvaluationReport.html" />
+    <Content Include="3AutomaticReply-CV Upload.html" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput.css" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput.min.css" />
     <Content Include="Content\bootstrap-fileinput\img\loading-sm.gif" />
@@ -279,10 +282,13 @@
     <Content Include="images\confirmationsucessfully.png" />
     <Content Include="images\default-profile-picture.jpg" />
     <Content Include="images\features\cv_image.png" />
+    <Content Include="images\image001.jpg" />
+    <Content Include="images\image002.png" />
     <Content Include="images\inbox.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo.png" />
     <Content Include="images\open_mail_letter-512.png" />
+    <Content Include="images\passwordresetsuccessfuly.png" />
     <Content Include="index.html" />
     <Content Include="OriginalFileUploader.html" />
     <Content Include="Scripts\bootstrap.min.js" />
