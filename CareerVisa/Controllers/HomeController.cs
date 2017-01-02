@@ -11,7 +11,10 @@ namespace CareerVisa.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.IsInRole("Administrators"))
+                return RedirectToAction("Index", "Administrators");
+            else
+                return View();
         }
 
         public ActionResult About()
