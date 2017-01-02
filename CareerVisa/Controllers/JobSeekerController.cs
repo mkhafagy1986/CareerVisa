@@ -30,7 +30,12 @@ namespace CareerVisa.Controllers
                 ViewBag.JobSeekerCoverLetters = GetDocumentViewModel(context, user.Documents, DocType.CoverLetters);
                 SetUserFullName(user);
 
-                return View(user);
+                if (user.EmailConfirmed)
+                    return View(user);
+                else
+                {
+                    return View("ConfirmationStopperMail");
+                }
             }
         }
 
@@ -250,6 +255,12 @@ namespace CareerVisa.Controllers
                 if (UploadCurriculumVitae == null)
                     return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
 
+                int pendingCVsCount = user.Documents.Where(
+                    doc => (doc.DocumentTypeId == (int)DocType.CurriculumVitae) && (doc.DocumentStatus == (int)DocStatus.Pending))
+                    .Count();
+                if (pendingCVsCount > 0)
+                    ModelState.AddModelError("DocumentLocation", "You can not upload a curriculum vitae and you have another pending one.");
+
                 if (ModelState.IsValid)
                 {
                     var extintion = "";
@@ -288,9 +299,18 @@ namespace CareerVisa.Controllers
                     Task.WaitAny(context.SaveChangesAsync());
                     SetUserFullName(user);
 
-                    return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
+                    string EmailMessage = "";
+                    EmailMessage = context.Configurations.Where(c => c.ConfigurationKey == "CVUploadConfirmationMail")
+                        .ToList()
+                        .First()
+                        .ConfigurationValue;
+
+                    EmailMessage = EmailMessage.Replace("{0}", user.FirstName);
+
+                    manager.SendEmailAsync(user.Id, "Curriculum Vitae confirmation mail", EmailMessage);
+
                 }
-                return View("Index", user);
+                return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
             }
         }
 
@@ -321,7 +341,7 @@ namespace CareerVisa.Controllers
 
                     return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
                 }
-                return View("Index", user);
+                return RedirectToAction("Index");
             }
         }
 
@@ -379,6 +399,12 @@ namespace CareerVisa.Controllers
                 if (UploadCoverLetter == null)
                     return View("JobSeekerCoverLetters", GetDocumentViewModel(context, user.Documents, DocType.CoverLetters));
 
+                int pendingCLsCount = user.Documents.Where(
+                    doc => (doc.DocumentTypeId == (int)DocType.CoverLetters) && (doc.DocumentStatus == (int)DocStatus.Pending))
+                    .Count();
+                if (pendingCLsCount > 0)
+                    ModelState.AddModelError("DocumentLocation", "You can not upload a cover letters and you have another pending one.");
+
                 if (ModelState.IsValid)
                 {
                     var extintion = "";
@@ -417,11 +443,20 @@ namespace CareerVisa.Controllers
                     Task.WaitAny(context.SaveChangesAsync());
                     SetUserFullName(user);
 
-                    return View("JobSeekerCoverLetters", GetDocumentViewModel(context, user.Documents, DocType.CoverLetters));
+                    string EmailMessage = "";
+                    EmailMessage = context.Configurations.Where(c => c.ConfigurationKey == "CoverLettersUploadConfirmationMail")
+                        .ToList()
+                        .First()
+                        .ConfigurationValue;
+
+                    EmailMessage = EmailMessage.Replace("{0}", user.FirstName);
+
+                    manager.SendEmailAsync(user.Id, "Cover Letters confirmation mail", EmailMessage);
+
                 }
                 SetUserFullName(user);
 
-                return View("Index", user);
+                return View("JobSeekerCoverLetters", GetDocumentViewModel(context, user.Documents, DocType.CoverLetters));
             }
         }
 
@@ -454,7 +489,7 @@ namespace CareerVisa.Controllers
                 }
                 SetUserFullName(user);
 
-                return View("Index", user);
+                return RedirectToAction("Index");
             }
         }
 

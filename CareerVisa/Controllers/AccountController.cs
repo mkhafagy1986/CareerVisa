@@ -189,10 +189,21 @@ namespace CareerVisa.Controllers
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
                         protocol: Request.Url.Scheme);
+
+                    string EmailMessage = "";
+                    using (var context = new ApplicationDbContext())
+                    {
+                        EmailMessage = context.Configurations.Where(c => c.ConfigurationKey == "RegistrationConfirmationEmail")
+                            .ToList()
+                            .First()
+                            .ConfigurationValue;
+                    }
+
+                    EmailMessage = EmailMessage.Replace("{0}", user.UserName);
+                    EmailMessage = EmailMessage.Replace("{1}", callbackUrl);
+
                     await
-                        UserManager.SendEmailAsync(user.Id, "Confirm your account",
-                            string.Format("Please confirm your account by clicking <a href=\"{0}\">here</a>",
-                                callbackUrl));
+                        UserManager.SendEmailAsync(user.Id, "Confirm your account",EmailMessage);
 
                     return RedirectToAction("RegisterConfirmation", "Account");
                 }

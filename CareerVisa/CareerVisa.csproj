@@ -230,11 +230,20 @@
     <Compile Include="Migrations\201612250904547_CarrerVisa_JobSeekerDocuments.Designer.cs">
       <DependentUpon>201612250904547_CarrerVisa_JobSeekerDocuments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701011601106_CareerVisa_Configurations.cs" />
+    <Compile Include="Migrations\201701011601106_CareerVisa_Configurations.Designer.cs">
+      <DependentUpon>201701011601106_CareerVisa_Configurations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701012023096_CareerVisa_Configurations_update.cs" />
+    <Compile Include="Migrations\201701012023096_CareerVisa_Configurations_update.Designer.cs">
+      <DependentUpon>201701012023096_CareerVisa_Configurations_update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CareerVisaDBContext.cs" />
     <Compile Include="Models\DocumentViewModel.cs" />
     <Compile Include="Models\Entities\CareerFields.cs" />
+    <Compile Include="Models\Entities\Configurations.cs" />
     <Compile Include="Models\Entities\Documents.cs" />
     <Compile Include="Models\Entities\DocumentStatus.cs" />
     <Compile Include="Models\Entities\DocumentsType.cs" />
@@ -486,6 +495,7 @@
     <Content Include="Views\JobSeeker\ReviewReports.cshtml" />
     <Content Include="Views\JobSeeker\ViewProfile.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\JobSeeker\ConfirmationStopperMail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -512,6 +522,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612250904547_CarrerVisa_JobSeekerDocuments.resx">
       <DependentUpon>201612250904547_CarrerVisa_JobSeekerDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701011601106_CareerVisa_Configurations.resx">
+      <DependentUpon>201701011601106_CareerVisa_Configurations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701012023096_CareerVisa_Configurations_update.resx">
+      <DependentUpon>201701012023096_CareerVisa_Configurations_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

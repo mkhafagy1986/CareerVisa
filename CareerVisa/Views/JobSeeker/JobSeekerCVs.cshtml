@@ -8,6 +8,11 @@
 
 <h2>Job Seeker Documents</h2>
 
+        <div id="validationsummary" class="alert alert-info alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            @Html.ValidationSummary()
+        </div>
+
 <p>
     @Html.ActionLink(" Upload CV", "AddJobSeekerCV", "JobSeeker", null, new { @class = "btn btn-primary btn-lg fa fa-plus-circle", data_target = "#modal-container", data_toggle = "modal" })
 </p>
