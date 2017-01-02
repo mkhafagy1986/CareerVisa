@@ -2,6 +2,7 @@
 using CareerVisa.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,31 @@ namespace CareerVisa.Controllers
 {
     public class JobSeekerController : Controller
     {
+        private ApplicationUserManager _userManager;
+
+        public JobSeekerController()
+        {
+        }
+
+        public JobSeekerController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+        }
+
+
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         // GET: JobSeeker
         [Authorize(Roles = "JobSeeker")]
         public ActionResult Index()
@@ -307,7 +333,7 @@ namespace CareerVisa.Controllers
 
                     EmailMessage = EmailMessage.Replace("{0}", user.FirstName);
 
-                    manager.SendEmailAsync(user.Id, "Curriculum Vitae confirmation mail", EmailMessage);
+                    Task.WaitAny(UserManager.SendEmailAsync(user.Id, "Curriculum Vitae confirmation mail", EmailMessage));
 
                 }
                 return View("JobSeekerCVs", GetDocumentViewModel(context, user.Documents, DocType.CurriculumVitae));
@@ -451,7 +477,7 @@ namespace CareerVisa.Controllers
 
                     EmailMessage = EmailMessage.Replace("{0}", user.FirstName);
 
-                    manager.SendEmailAsync(user.Id, "Cover Letters confirmation mail", EmailMessage);
+                    Task.WaitAny(UserManager.SendEmailAsync(user.Id, "Cover Letters confirmation mail", EmailMessage));
 
                 }
                 SetUserFullName(user);
