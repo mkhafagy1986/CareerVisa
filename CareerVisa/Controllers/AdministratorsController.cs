@@ -14,52 +14,50 @@ namespace CareerVisa.Controllers
 {
     public class AdministratorsController : Controller
     {
-        private ApplicationUserManager _userManager;
+        private UsersCountViewModel UsersCount;
 
         public AdministratorsController()
         {
+            UsersCount = new UsersCountViewModel();
         }
 
         public AdministratorsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
-            UserManager = userManager;
-        }
-
-
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        private RoleManager<IdentityRole>  _RoleManager;
-        public RoleManager<IdentityRole> RoleManager
-        {
-            get
-            {
-                return _RoleManager ?? new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            }
-            set { _RoleManager = value; }
+            UsersCount = new UsersCountViewModel();
         }
 
         // GET: Administrators
         [Authorize(Roles = "Administrators")]
         public ActionResult Index()
         {
-            ViewBag.NotAssignedCoverLettersCount = 100;
-            ViewBag.NotAssignedCVsCount = 200;
-            ViewBag.EmployersCount = 150;
-            ViewBag.JobSeekerCount = 250;
+            GetEmployersCount();
+            ViewBag.NotAssignedCoverLettersCount = UsersCount.NotAssignedCoverLettersCount;
+            ViewBag.NotAssignedCVsCount = UsersCount.NotAssignedCVsCount;
+            ViewBag.EmployersCount = UsersCount.EmployersCount;
+            ViewBag.JobSeekerCount = UsersCount.JobSeekerCount;
 
-            RoleManager.
             return View();
+        }
+
+        private void GetEmployersCount()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+
+                UsersCount.EmployersCount = context.Users.Where(user => user.Roles.Any(role => role.RoleId == "4")).Count();
+                UsersCount.JobSeekerCount = context.Users.Where(user => user.Roles.Any(role => role.RoleId == "3")).Count();
+
+
+            }
+
+            //foreach (var user in UserManager.Users.ToList())
+            //{
+            //    if (UserManager.IsInRole(user.Id, "Employer"))
+            //        UsersCount.EmployersCount++;
+            //    else if (UserManager.IsInRole(user.Id, "JobSeeker"))
+            //        UsersCount.JobSeekerCount++;
+            //}
+
         }
     }
 }

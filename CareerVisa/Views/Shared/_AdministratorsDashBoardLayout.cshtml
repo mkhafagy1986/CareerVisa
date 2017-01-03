@@ -205,7 +205,7 @@
                                         <i class="fa fa-graduation-cap fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">@ViewBag.JobSeekerCount</div>
+                                        <div class="huge"><div id="OnlineJobSeekers"></div> / @ViewBag.JobSeekerCount</div>
                                         <div>Job Seekers</div>
                                     </div>
                                 </div>
@@ -227,7 +227,7 @@
                                         <i class="fa fa-briefcase fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">@ViewBag.EmployersCount</div>
+                                        <div class="huge"><div id="OnlineJobSeekerEmployers"></div> / @ViewBag.EmployersCount</div>
                                         <div>Employers</div>
                                     </div>
                                 </div>
@@ -298,6 +298,7 @@
     <!-- /#wrapper -->
     <!-- jQuery -->
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/signalR")
     @*@Scripts.Render("~/bundles/bootstrap")*@
     @Scripts.Render("~/bundles/scriptsdashboard")
     @RenderSection("scripts", required: false)
@@ -335,6 +336,20 @@
         $('#CancelModal').on('click', function () {
             return false;
         });
+    });
+
+    $(function () {
+        // Reference the auto-generated proxy for the hub.  
+        var userActivity = $.connection.userActivityHub;
+
+        // Create a function that the hub can call back to display messages.
+        userActivity.client.updateUsersOnlineCount = function (Employerscount,JobSeekersCount) {
+            // Add the message to the page. 
+            $('#OnlineJobSeekers').text(JobSeekersCount);
+            $('#OnlineEmployers').text(Employerscount);
+        };
+
+        $.connection.hub.start();
     });
 </script>
 </body>

@@ -13,6 +13,9 @@ namespace CareerVisa
                         "~/Scripts/jquery.maskedinput.min.js",
                         "~/Scripts/jquery.backstretch.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
+                "~/Scripts/jquery.signalR-{version}.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
