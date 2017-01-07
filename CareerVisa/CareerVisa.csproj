@@ -227,6 +227,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\UserActivityHub.cs" />
     <Compile Include="Migrations\201612212345269_CareerVisa_Models.cs" />
     <Compile Include="Migrations\201612212345269_CareerVisa_Models.Designer.cs">
       <DependentUpon>201612212345269_CareerVisa_Models.cs</DependentUpon>
@@ -271,7 +272,6 @@
     <Compile Include="Models\UsersCountViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Hubs\UserActivityHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="1Registration.html" />
@@ -521,6 +521,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="JobSeekersCurriculumVitae\" />
     <Folder Include="UserProfilePictures\712ac26d-c5ea-4e37-8ba1-81abbee03219\" />
+    <Folder Include="Utils\" />
     <Folder Include="Views\Employeer\" />
   </ItemGroup>
   <ItemGroup>
