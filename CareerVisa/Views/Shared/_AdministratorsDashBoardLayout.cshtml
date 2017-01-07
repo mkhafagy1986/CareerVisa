@@ -350,11 +350,25 @@
             $(this).removeData('bs.modal');
         });
 
-        $('#CancelModal').on('click', function () {
-            return false;
+            $('#CancelModal').on('click', function () {
+                return false;
+            });
         });
-    });
-</script>
+
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            var userActivity = $.connection.userActivityHub;
+
+            // Create a function that the hub can call back to display messages.
+            userActivity.client.updateUsersOnlineCount = function (Employerscount, JobSeekersCount) {
+                // Add the message to the page.
+                $('#OnlineJobSeekers').text(JobSeekersCount);
+                $('#OnlineEmployers').text(Employerscount);
+            };
+
+            $.connection.hub.start();
+        });
+    </script>
 </body>
 </html>
 
