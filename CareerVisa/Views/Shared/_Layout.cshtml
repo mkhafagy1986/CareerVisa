@@ -67,11 +67,29 @@
     </section>
     <!-- Footer Section End -->
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/signalR")
     @RenderSection("DefaultscriptBundle", required: false)
     @RenderSection("RegistrationscriptBundle", required: false)
     @RenderSection("scripts", required: false)
 
     <div class="modal"><!-- Place at bottom of page --></div>
+<script type="text/javascript" src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+    $(function () {
+        // Reference the auto-generated proxy for the hub.
+        var userActivity = $.connection.userActivityHub;
+
+        // Create a function that the hub can call back to display messages.
+
+        userActivity.client.updateUsersOnlineCount = function (OnlineEmployersCount, OnlineJobSeekersCount) {
+            // Add the message to the page.
+            $('#OnlineJobSeekers').text(OnlineJobSeekersCount);
+            $('#OnlineEmployers').text(OnlineEmployersCount);
+        };
+       
+        $.connection.hub.start();
+    });
+    </script>
     <script type="text/javascript">
         $body = $("body");
 

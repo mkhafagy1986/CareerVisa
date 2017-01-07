@@ -80,8 +80,6 @@ namespace CareerVisa
                       //"~/Scripts/bootstrap.min.js",
                       "~/Scripts/wow.js",
                       "~/Scripts/plugins/morris/raphael.min.js",
-                      "~/Scripts/plugins/morris/morris.min.js",
-                      "~/Scripts/plugins/morris/morris-data.js",
                       "~/Scripts/gridmvc.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/cssdashboard").Include(

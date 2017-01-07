@@ -307,6 +307,23 @@
         <div class="modal-content">
         </div>
     </div>
+<script type="text/javascript" src="~/signalr/hubs"></script>
+<script type="text/javascript">
+    $(function () {
+        // Reference the auto-generated proxy for the hub.  
+        var userActivity = $.connection.userActivityHub;
+
+        // Create a function that the hub can call back to display messages.
+
+        userActivity.client.updateUsersOnlineCount = function (OnlineEmployersCount, OnlineJobSeekersCount) {
+            // Add the message to the page. 
+            $('#OnlineJobSeekers').text(OnlineJobSeekersCount);
+            $('#OnlineEmployers').text(OnlineEmployersCount);
+        };
+        
+        $.connection.hub.start();
+    });
+</script>
 <script type="text/javascript">
     $("div.validation-summary-valid").parent().hide();
 
@@ -336,20 +353,6 @@
         $('#CancelModal').on('click', function () {
             return false;
         });
-    });
-
-    $(function () {
-        // Reference the auto-generated proxy for the hub.  
-        var userActivity = $.connection.userActivityHub;
-
-        // Create a function that the hub can call back to display messages.
-        userActivity.client.updateUsersOnlineCount = function (Employerscount,JobSeekersCount) {
-            // Add the message to the page. 
-            $('#OnlineJobSeekers').text(JobSeekersCount);
-            $('#OnlineEmployers').text(Employerscount);
-        };
-
-        $.connection.hub.start();
     });
 </script>
 </body>
