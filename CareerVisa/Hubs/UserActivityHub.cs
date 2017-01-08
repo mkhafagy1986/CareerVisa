@@ -8,6 +8,9 @@ namespace CareerVisa.Hubs
     using Microsoft.AspNet.SignalR.Hubs;
     using Microsoft.AspNet.Identity;
     using Models;
+    using System.Web.SessionState;
+    using System.Web;
+    using Models.Entities;
 
     [HubName("userActivityHub")]
     public class UserActivityHub : Hub
@@ -15,9 +18,9 @@ namespace CareerVisa.Hubs
         /// <summary>
         /// The count of users connected.
         /// </summary>
-        public static List<OnlineUserViewModel> Users = new List<OnlineUserViewModel>();
-        public static List<OnlineUserViewModel> OnlineEmployers = new List<OnlineUserViewModel>();
-        public static List<OnlineUserViewModel> OnlineJobSeekers = new List<OnlineUserViewModel>();
+        public static List<LoggedInUser> Users = new List<LoggedInUser>();
+        public static List<LoggedInUser> OnlineEmployers = new List<LoggedInUser>();
+        public static List<LoggedInUser> OnlineJobSeekers = new List<LoggedInUser>();
 
         /// <summary>
         /// Sends the update user count to the listening view.
@@ -45,20 +48,17 @@ namespace CareerVisa.Hubs
             {
                 using (ApplicationDbContext db = new ApplicationDbContext())
                 {
-                    var user = db.Users.FirstOrDefault(i => i.UserName == Context.User.Identity.Name);
+                    var user = db.LoggedInUsers.FirstOrDefault(i => i.UserId == Context.User.Identity.Name);
 
-                    if (!Users.ToList().Exists(i => i.ConnectionId == Context.ConnectionId && i.User == user))
+                    if ((user != null) && (!Users.ToList().Exists(i => i.UserId == user.UserId)))
                     {
-                        OnlineUserViewModel tuble = new OnlineUserViewModel();
-                        tuble.ConnectionId = Context.ConnectionId;
-                        tuble.User = user;
 
-                        Users.Add(tuble);
+                        Users.Add(user);
 
                         if (Context.User.IsInRole("JobSeeker"))
-                            OnlineJobSeekers.Add(tuble);
+                            OnlineJobSeekers.Add(user);
                         else if (Context.User.IsInRole("Employer"))
-                            OnlineEmployers.Add(tuble);
+                            OnlineEmployers.Add(user);
                     }
                 }
             }
@@ -93,17 +93,18 @@ namespace CareerVisa.Hubs
         /// </returns>
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
         {
-            if (Users.ToList().Exists(i => i.ConnectionId == Context.ConnectionId))
+            string SessionId = GetSessionId();
+            if (Users.ToList().Exists(i => i.ConnectionId == SessionId))
             {
-                Users.Remove(Users.FirstOrDefault(i => i.ConnectionId == Context.ConnectionId));
+                Users.Remove(Users.FirstOrDefault(i => i.ConnectionId == SessionId));
 
-                if (OnlineEmployers.ToList().Exists(i => i.ConnectionId == Context.ConnectionId))
+                if (OnlineEmployers.ToList().Exists(i => i.ConnectionId == SessionId))
                 {
-                    OnlineEmployers.Remove(OnlineEmployers.FirstOrDefault(i => i.ConnectionId == Context.ConnectionId));
+                    OnlineEmployers.Remove(OnlineEmployers.FirstOrDefault(i => i.ConnectionId == SessionId));
                 }
-                else if (OnlineJobSeekers.ToList().Exists(i => i.ConnectionId == Context.ConnectionId))
+                else if (OnlineJobSeekers.ToList().Exists(i => i.ConnectionId == SessionId))
                 {
-                    OnlineJobSeekers.Remove(OnlineJobSeekers.FirstOrDefault(i => i.ConnectionId == Context.ConnectionId));
+                    OnlineJobSeekers.Remove(OnlineJobSeekers.FirstOrDefault(i => i.ConnectionId == SessionId));
                 }
             }
 
@@ -111,6 +112,5 @@ namespace CareerVisa.Hubs
             return base.OnDisconnected(stopCalled);
         }
 
-        
     }
 }

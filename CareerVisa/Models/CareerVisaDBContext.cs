@@ -29,5 +29,7 @@ namespace CareerVisa.Models
         public DbSet<DocumentsType> DocumentsTypes { get; set; }
         public DbSet<Configuration> Configurations { get; set; }
 
+        public DbSet<LoggedInUser> LoggedInUsers { get; set; }
+
     }
 }
