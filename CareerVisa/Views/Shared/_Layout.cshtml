@@ -89,6 +89,10 @@
        
         $.connection.hub.start();
     });
+
+    $.connection.userActivityHub.client.logoff = function () {
+        $.connection.hub.stop();
+    }
     </script>
     <script type="text/javascript">
         $body = $("body");

@@ -205,7 +205,8 @@
                                         <i class="fa fa-graduation-cap fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><div id="OnlineJobSeekers"></div> / @ViewBag.JobSeekerCount</div>
+                                        <div class="huge row">
+                                            <div style="display:inline-block" id="OnlineJobSeekers"></div><div style="display:inline-block">/@ViewBag.JobSeekerCount</div></div>
                                         <div>Job Seekers</div>
                                     </div>
                                 </div>
@@ -227,7 +228,7 @@
                                         <i class="fa fa-briefcase fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><div id="OnlineJobSeekerEmployers"></div> / @ViewBag.EmployersCount</div>
+                                        <div class="huge row"><div style="display:inline-block"  id="OnlineEmployers"></div><div style="display:inline-block">/@ViewBag.EmployersCount</div></div>
                                         <div>Employers</div>
                                     </div>
                                 </div>
@@ -323,6 +324,7 @@
         
         $.connection.hub.start();
     });
+    
 </script>
 <script type="text/javascript">
     $("div.validation-summary-valid").parent().hide();

@@ -19,7 +19,9 @@ namespace CareerVisa.Hubs
         /// <summary>
         /// The count of users connected.
         /// </summary>
-        private static readonly ConcurrentDictionary<string, string> Users = new ConcurrentDictionary<string, string>();
+
+        private static List<System.Tuple<string, string>> Users = new List<System.Tuple<string, string>>();
+        //private static readonly ConcurrentDictionary<string, string> Users = new ConcurrentDictionary<string, string>();
         //public static List<LoggedInUser> Users = new List<LoggedInUser>();
         public static List<string> OnlineEmployers = new List<string>();
         public static List<string> OnlineJobSeekers = new List<string>();
@@ -37,6 +39,7 @@ namespace CareerVisa.Hubs
             context.Clients.All.updateUsersOnlineCount(OnlineEmployersCount, OnlineJobSeekersCount);
         }
 
+
         /// <summary>
         /// The OnConnected event.
         /// </summary>
@@ -47,13 +50,29 @@ namespace CareerVisa.Hubs
         public override System.Threading.Tasks.Task OnConnected()
         {
 
-            Users.TryAdd(Context.ConnectionId, Context.User.Identity.GetUserId());
+            if (Context.User.Identity.IsAuthenticated)
+            {
+                var user = Context.User.Identity.Name;
 
-            if (Context.User.IsInRole("JobSeeker"))
-                OnlineJobSeekers.Add(Context.User.Identity.GetUserId());
-            else if (Context.User.IsInRole("Employer"))
-                OnlineEmployers.Add(Context.User.Identity.GetUserId());
+                if (!Users.ToList().Exists(i => i.Item2 == user))
+                {
+                    Users.Add(new System.Tuple<string, string>(Context.ConnectionId, user));
 
+                    if (Context.User.IsInRole("JobSeeker"))
+                        OnlineJobSeekers.Add(user);
+                    else if (Context.User.IsInRole("Employer"))
+                        OnlineEmployers.Add(user);
+                }
+                
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Context.User.Identity.Name))
+                {
+                    //RemoverOfflineUser(Context.ConnectionId);
+                    OnDisconnected(true);
+                }
+            }
             Send(OnlineEmployers.Count, OnlineJobSeekers.Count);
 
             return base.OnConnected();
@@ -78,25 +97,36 @@ namespace CareerVisa.Hubs
         /// </returns>
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
         {
-            string ConnectionId = Users.Where(user => user.Value == Context.User.Identity.GetUserId()).ToList().First().Value;
-            if(ConnectionId !=null && ConnectionId != Context.ConnectionId)
-            {
-                string UserName = Context.User.Identity.GetUserId();
-                Users.TryRemove(ConnectionId,out UserName);
-
-                if (OnlineEmployers.ToList().Exists(i => i == UserName))
-                {
-                    OnlineEmployers.Remove(OnlineEmployers.FirstOrDefault(i => i == UserName));
-                }
-                else if (OnlineJobSeekers.ToList().Exists(i => i == UserName))
-                {
-                    OnlineJobSeekers.Remove(OnlineJobSeekers.FirstOrDefault(i => i == UserName));
-                }
-            }
-           
             Send(OnlineEmployers.Count, OnlineJobSeekers.Count);
             return base.OnDisconnected(stopCalled);
         }
+        public static string GetConnectionIdByName(string UserId)
+        {
+            var UserTuble = Users.FirstOrDefault(user => user.Item2 == UserId);
+            if (UserTuble != null)
+                return UserTuble.Item1;
+            return "";
+        }
 
+        public static void RemoverOfflineUser(string ConnectionId)
+        {
+            string UserName = "";
+            if (Users.ToList().Exists(i => i.Item1 == ConnectionId))
+            {
+                UserName = Users.FirstOrDefault(i => i.Item1 == ConnectionId).Item2;
+                Users.Remove(Users.FirstOrDefault(i => i.Item1 == ConnectionId));
+            }
+            if (OnlineEmployers.ToList().Exists(i => i == UserName))
+            {
+                OnlineEmployers.Remove(OnlineEmployers.FirstOrDefault(i => i == UserName));
+            }
+            else if (OnlineJobSeekers.ToList().Exists(i => i == UserName))
+            {
+                OnlineJobSeekers.Remove(OnlineJobSeekers.FirstOrDefault(i => i == UserName));
+            }
+
+        }
     }
+
+
 }
