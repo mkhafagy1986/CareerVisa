@@ -68,7 +68,7 @@ namespace CareerVisa.Controllers
 		public string GetSessionId()
 		{
 			SessionIDManager manager = new SessionIDManager();
-			string newSessionId = manager.CreateSessionID(HttpContext.Current);
+			string newSessionId = manager.CreateSessionID(System.Web.HttpContext.Current);
 
 			return newSessionId;
 		}
@@ -90,20 +90,7 @@ namespace CareerVisa.Controllers
 			switch (result)
 			{
 				case SignInStatus.Success:
-					{
-						LoggedInUser loggedInUser = new LoggedInUser();
-						loggedInUser.SessionId = GetSessionId();
-						loggedInUser.UserId = User.Identity.GetUserId();
-						loggedInUser.LoggingInDateTime = DateTime.Now;
-
-						ApplicationDbContext db = new ApplicationDbContext();
-						db.LoggedInUsers.Add(loggedInUser);
-						db.SaveChanges();
-
-					    ViewBag.CurrentSessionId = loggedInUser.SessionId;
-
                         return RedirectToLocal(returnUrl);
-					}
 				case SignInStatus.LockedOut:
 					return View("Lockout");
 				case SignInStatus.RequiresVerification:
@@ -511,12 +498,7 @@ namespace CareerVisa.Controllers
 		public ActionResult LogOff()
 		{
 			ApplicationDbContext db = new ApplicationDbContext();
-			LoggedInUser currentloggeduser =
-				db.LoggedInUsers.Where(user => user.UserId == User.Identity.GetUserId()).ToList().First();
-
-			db.LoggedInUsers.Remove(currentloggeduser);
-			db.SaveChanges();
-
+			
 			AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
 			return RedirectToAction("Index", "Home");
 		}

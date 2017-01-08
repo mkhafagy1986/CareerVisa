@@ -11,6 +11,7 @@ namespace CareerVisa.Hubs
     using System.Web.SessionState;
     using System.Web;
     using Models.Entities;
+    using System.Collections.Concurrent;
 
     [HubName("userActivityHub")]
     public class UserActivityHub : Hub
@@ -18,9 +19,10 @@ namespace CareerVisa.Hubs
         /// <summary>
         /// The count of users connected.
         /// </summary>
-        public static List<LoggedInUser> Users = new List<LoggedInUser>();
-        public static List<LoggedInUser> OnlineEmployers = new List<LoggedInUser>();
-        public static List<LoggedInUser> OnlineJobSeekers = new List<LoggedInUser>();
+        private static readonly ConcurrentDictionary<string, string> Users = new ConcurrentDictionary<string, string>();
+        //public static List<LoggedInUser> Users = new List<LoggedInUser>();
+        public static List<string> OnlineEmployers = new List<string>();
+        public static List<string> OnlineJobSeekers = new List<string>();
 
         /// <summary>
         /// Sends the update user count to the listening view.
@@ -44,31 +46,14 @@ namespace CareerVisa.Hubs
 
         public override System.Threading.Tasks.Task OnConnected()
         {
-            if (Context.User.Identity.IsAuthenticated)
-            {
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    var user = db.LoggedInUsers.FirstOrDefault(i => i.UserId == Context.User.Identity.Name);
 
-                    if ((user != null) && (!Users.ToList().Exists(i => i.UserId == user.UserId)))
-                    {
+            Users.TryAdd(Context.ConnectionId, Context.User.Identity.GetUserId());
 
-                        Users.Add(user);
+            if (Context.User.IsInRole("JobSeeker"))
+                OnlineJobSeekers.Add(Context.User.Identity.GetUserId());
+            else if (Context.User.IsInRole("Employer"))
+                OnlineEmployers.Add(Context.User.Identity.GetUserId());
 
-                        if (Context.User.IsInRole("JobSeeker"))
-                            OnlineJobSeekers.Add(user);
-                        else if (Context.User.IsInRole("Employer"))
-                            OnlineEmployers.Add(user);
-                    }
-                }
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(Context.User.Identity.Name))
-                {
-                    OnDisconnected(true);
-                }
-            }
             Send(OnlineEmployers.Count, OnlineJobSeekers.Count);
 
             return base.OnConnected();
@@ -93,21 +78,22 @@ namespace CareerVisa.Hubs
         /// </returns>
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
         {
-            string SessionId = GetSessionId();
-            if (Users.ToList().Exists(i => i.ConnectionId == SessionId))
+            string ConnectionId = Users.Where(user => user.Value == Context.User.Identity.GetUserId()).ToList().First().Value;
+            if(ConnectionId !=null && ConnectionId != Context.ConnectionId)
             {
-                Users.Remove(Users.FirstOrDefault(i => i.ConnectionId == SessionId));
+                string UserName = Context.User.Identity.GetUserId();
+                Users.TryRemove(ConnectionId,out UserName);
 
-                if (OnlineEmployers.ToList().Exists(i => i.ConnectionId == SessionId))
+                if (OnlineEmployers.ToList().Exists(i => i == UserName))
                 {
-                    OnlineEmployers.Remove(OnlineEmployers.FirstOrDefault(i => i.ConnectionId == SessionId));
+                    OnlineEmployers.Remove(OnlineEmployers.FirstOrDefault(i => i == UserName));
                 }
-                else if (OnlineJobSeekers.ToList().Exists(i => i.ConnectionId == SessionId))
+                else if (OnlineJobSeekers.ToList().Exists(i => i == UserName))
                 {
-                    OnlineJobSeekers.Remove(OnlineJobSeekers.FirstOrDefault(i => i.ConnectionId == SessionId));
+                    OnlineJobSeekers.Remove(OnlineJobSeekers.FirstOrDefault(i => i == UserName));
                 }
             }
-
+           
             Send(OnlineEmployers.Count, OnlineJobSeekers.Count);
             return base.OnDisconnected(stopCalled);
         }
