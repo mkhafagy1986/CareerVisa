@@ -17,5 +17,8 @@ namespace CareerVisa.Models.Entities
         public string DocumentLocation { set; get; }
         public int DocumentTypeId { get; set; }
         public int DocumentStatus { get; set; }
+        public DateTime UploadDate { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }

@@ -316,7 +316,8 @@ namespace CareerVisa.Controllers
                         DocumentDescription = model.DocumentDescription,
                         DocumentLocation = string.Format("/JobSeekersCurriculumVitae/" + "{0}/{1}", user.Id, filename),
                         DocumentStatus = (int)DocStatus.Pending,
-                        DocumentTypeId = (int)DocType.CurriculumVitae
+                        DocumentTypeId = (int)DocType.CurriculumVitae,
+                        UploadDate = DateTime.Now
                     };
 
                     user.Documents.Add(NewCurriculumVitae);
@@ -460,7 +461,8 @@ namespace CareerVisa.Controllers
                         DocumentDescription = model.DocumentDescription,
                         DocumentLocation = string.Format("/JobSeekersCoverLetter/" + "{0}/{1}", user.Id, filename),
                         DocumentStatus = (int)DocStatus.Pending,
-                        DocumentTypeId = (int)DocType.CoverLetters
+                        DocumentTypeId = (int)DocType.CoverLetters,
+                        UploadDate = DateTime.Now
                     };
 
                     user.Documents.Add(NewCoverLetter);

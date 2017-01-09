@@ -154,14 +154,14 @@
                 <ul class="nav navbar-nav side-nav">
 
 
-                    @{ url = Url.Action("Index", "JobSeeker"); }
+                    @{ url = Url.Action("Index", "Administrators"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
-                        <a href="@Url.Action("Index", "JobSeeker")"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="@Url.Action("Index", "Administrators")"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
 
-                    @{ url = Url.Action("CareerFields", "JobSeeker"); }
+                    @{ url = Url.Action("AssignCurriculumVitae", "Administrators"); }
                     <li class="@(url == Request.Url.AbsolutePath ? "active" : string.Empty)">
-                        <a href="@Url.Action("CareerFields", "JobSeeker")"><i class="fa fa-fw fa-th-list"></i> Choose career fields</a>
+                        <a href="@Url.Action("AssignCurriculumVitae", "Administrators")"><i class="fa fa-fw fa-th-list"></i> Assign Curriculum Vitae</a>
                     </li>
 
                     @{ url = Url.Action("JobSeekerCVs", "JobSeeker"); }
