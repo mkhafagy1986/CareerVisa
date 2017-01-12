@@ -1,6 +1,7 @@
 ﻿
 
 using CareerVisa.Models;
+using CareerVisa.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -90,6 +91,14 @@ namespace CareerVisa.Controllers
                 .ToList();
             }
             return NotAssignDocuments;
+        }
+
+        public ViewResult Assign(int DocumentId)
+        {
+            AssignedDocument DocumentToAssign = new AssignedDocument();
+
+
+            return View();
         }
 
     }
