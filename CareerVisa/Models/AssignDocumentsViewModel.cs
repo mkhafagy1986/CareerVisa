@@ -9,7 +9,7 @@ namespace CareerVisa.Models
     {
         public string DocumentOwnerUsername { get; set; }
         public string DocumentOwnerUserId { get; set; }
-        public int DocumentId { get; set; }
+        public string DocumentId { get; set; }
         public string DocumentDescription { get; set; }
         public string DocumentStatus { get; set; }
         public int DocumentStatusId { get; set; }

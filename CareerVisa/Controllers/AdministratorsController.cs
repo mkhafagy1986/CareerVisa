@@ -1,5 +1,6 @@
 ﻿
 
+using CareerVisa.App_Start;
 using CareerVisa.Models;
 using CareerVisa.Models.Entities;
 using Microsoft.AspNet.Identity;
@@ -7,6 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,10 +18,11 @@ namespace CareerVisa.Controllers
     public class AdministratorsController : Controller
     {
         private UsersCountViewModel UsersCount;
-
+        EncryptionHelper EncryptionHelper;
         public AdministratorsController()
         {
             UsersCount = new UsersCountViewModel();
+            EncryptionHelper = new EncryptionHelper(ConfigurationManager.AppSettings["EncryptionKey"]);
         }
 
         public AdministratorsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -93,10 +96,13 @@ namespace CareerVisa.Controllers
             return NotAssignDocuments;
         }
 
-        public ViewResult Assign(int DocumentId)
+        public ViewResult Assign(string EncryptedDocumentId, string EncryptedOwnerId)
         {
             AssignedDocument DocumentToAssign = new AssignedDocument();
 
+
+            string DocumentId = EncryptionHelper.Decrypt(EncryptedDocumentId);
+            string OwnerId = EncryptionHelper.Decrypt(EncryptedOwnerId);
 
             return View();
         }

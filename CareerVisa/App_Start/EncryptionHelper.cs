@@ -16,7 +16,7 @@ namespace CareerVisa.App_Start
             mobjCryptoService = new DESCryptoServiceProvider();
             _EncryptionKey = EncryptionKey;
         }
-        string Encrypt(string Source)
+        public string Encrypt(string Source)
         {
             byte[] bytIn = System.Text.ASCIIEncoding.ASCII.GetBytes(Source);
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
@@ -42,7 +42,7 @@ namespace CareerVisa.App_Start
             return System.Convert.ToBase64String(bytOut, 0, i);
         }
 
-        string Decrypt(string Source)
+        public string Decrypt(string Source)
         {
             byte[] bytIn = System.Convert.FromBase64String(Source);
 
@@ -62,7 +62,7 @@ namespace CareerVisa.App_Start
             return sr.ReadToEnd();
         }
 
-        byte[] GetLegalKey(string Key)
+        public byte[] GetLegalKey(string Key)
         {
             string sTemp;
             if (mobjCryptoService.LegalKeySizes.Length > 0)
