@@ -18,6 +18,7 @@ namespace CareerVisa.Controllers
     public class AdministratorsController : Controller
     {
         private UsersCountViewModel UsersCount;
+        IEnumerable<NotAssignDocumentsViewModel> NotAssignDocuments;
         EncryptionHelper EncryptionHelper;
         public AdministratorsController()
         {
@@ -28,6 +29,7 @@ namespace CareerVisa.Controllers
         public AdministratorsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UsersCount = new UsersCountViewModel();
+            EncryptionHelper = new EncryptionHelper(ConfigurationManager.AppSettings["EncryptionKey"]);
         }
 
         // GET: Administrators
@@ -38,7 +40,7 @@ namespace CareerVisa.Controllers
             return View();
         }
 
-        private void GetEmployersCount()
+        private void GetUsersCount()
         {
             using (var context = new ApplicationDbContext())
             {
@@ -47,12 +49,22 @@ namespace CareerVisa.Controllers
             }
         }
 
+        private void GetNotAssignDocumentsCount()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                UsersCount.NotAssignedCVsCount = context.Documents.Where(doc => doc.DocumentTypeId== (int)DocType.CurriculumVitae && doc.DocumentStatus==(int)DocStatus.Pending).Count();
+                UsersCount.NotAssignedCoverLettersCount = context.Documents.Where(doc => doc.DocumentTypeId == (int)DocType.CoverLetters && doc.DocumentStatus == (int)DocStatus.Pending).Count();
+            }
+        }
+
         public void GetAdminData()
         {
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var currentUser = manager.FindById(User.Identity.GetUserId());
 
-            GetEmployersCount();
+            GetUsersCount();
+            GetNotAssignDocumentsCount();
             ViewBag.NotAssignedCoverLettersCount = UsersCount.NotAssignedCoverLettersCount;
             ViewBag.NotAssignedCVsCount = UsersCount.NotAssignedCVsCount;
             ViewBag.EmployersCount = UsersCount.EmployersCount;
@@ -68,7 +80,7 @@ namespace CareerVisa.Controllers
         public ViewResult AssignCurriculumVitae()
         {
             GetAdminData();
-            return View(GetNotAssignDocuments());
+            return View(GetNotAssignDocuments().Where(doc => doc.DocumentTypeId == (int)DocType.CurriculumVitae));
         }
 
         public IEnumerable<NotAssignDocumentsViewModel> GetNotAssignDocuments()
@@ -79,14 +91,14 @@ namespace CareerVisa.Controllers
                 NotAssignDocuments = context.Documents.Select(
                 NotAssignDocument => new NotAssignDocumentsViewModel
                 {
-                    DocumentId = NotAssignDocument.DocumentId,
+                    DocumentId = NotAssignDocument.DocumentId.ToString(),
                     DocumentDescription = NotAssignDocument.DocumentDescription,
                     AssignDate = DateTime.Now,
                     DocumentOwnerUserId = NotAssignDocument.User.Id,
                     DocumentOwnerUsername = NotAssignDocument.User.UserName,
                     DocumentStatusId = NotAssignDocument.DocumentStatus,
 
-                    DocumentStatus = (NotAssignDocument.DocumentStatus == 1? DocStatus.Pending.ToString(): (NotAssignDocument.DocumentStatus == 2 ? DocStatus.Approved.ToString(): (NotAssignDocument.DocumentStatus == 3 ? DocStatus.Rejected.ToString(): (NotAssignDocument.DocumentStatus == 4 ? DocStatus.Assigned.ToString() : "")))),
+                    DocumentStatus = (NotAssignDocument.DocumentStatus == 1 ? DocStatus.Pending.ToString() : (NotAssignDocument.DocumentStatus == 2 ? DocStatus.Approved.ToString() : (NotAssignDocument.DocumentStatus == 3 ? DocStatus.Rejected.ToString() : (NotAssignDocument.DocumentStatus == 4 ? DocStatus.Assigned.ToString() : "")))),
                     DocumentTypeId = NotAssignDocument.DocumentTypeId,
                     DocumentType = (NotAssignDocument.DocumentTypeId == 1 ? DocType.CurriculumVitae.ToString() : (NotAssignDocument.DocumentTypeId == 2 ? DocType.CoverLetters.ToString() : (NotAssignDocument.DocumentTypeId == 3 ? DocType.EvaluationReport.ToString() : ""))),
                     DocumentUploadDate = NotAssignDocument.UploadDate
@@ -98,8 +110,8 @@ namespace CareerVisa.Controllers
 
         public ViewResult Assign(string EncryptedDocumentId, string EncryptedOwnerId)
         {
+            GetAdminData();
             AssignedDocument DocumentToAssign = new AssignedDocument();
-
 
             string DocumentId = EncryptionHelper.Decrypt(EncryptedDocumentId);
             string OwnerId = EncryptionHelper.Decrypt(EncryptedOwnerId);

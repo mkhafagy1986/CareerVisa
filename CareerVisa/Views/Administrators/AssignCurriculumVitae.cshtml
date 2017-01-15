@@ -26,7 +26,7 @@
     .Encoded(false)
     .Sanitized(false)
     .SetWidth(30)
-    .RenderValueAs(o => Html.ActionLink(" Assign", "Assign", "Administrators", new { DocumentId = o.DocumentId, OwnerId= o.DocumentOwnerUserId }, new { @class = "fa fa-forward" }));
+    .RenderValueAs(o => Html.ActionLink(" Assign", "Assign", "Administrators", new { EncryptedDocumentId = o.DocumentId, EncryptedOwnerId = o.DocumentOwnerUserId }, new { @class = "fa fa-forward" }));
 }).Sortable(true).WithPaging(10)
 
 </div>

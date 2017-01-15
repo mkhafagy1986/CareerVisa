@@ -532,6 +532,7 @@
     <Content Include="Views\Shared\_AdministratorsDashBoardLayout.cshtml" />
     <Content Include="Views\Administrators\Index.cshtml" />
     <Content Include="Views\Administrators\AssignCurriculumVitae.cshtml" />
+    <Content Include="Views\Administrators\Assign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
