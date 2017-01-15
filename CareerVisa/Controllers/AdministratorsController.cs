@@ -53,7 +53,7 @@ namespace CareerVisa.Controllers
         {
             using (var context = new ApplicationDbContext())
             {
-                UsersCount.NotAssignedCVsCount = context.Documents.Where(doc => doc.DocumentTypeId== (int)DocType.CurriculumVitae && doc.DocumentStatus==(int)DocStatus.Pending).Count();
+                UsersCount.NotAssignedCVsCount = context.Documents.Where(doc => doc.DocumentTypeId == (int)DocType.CurriculumVitae && doc.DocumentStatus == (int)DocStatus.Pending).Count();
                 UsersCount.NotAssignedCoverLettersCount = context.Documents.Where(doc => doc.DocumentTypeId == (int)DocType.CoverLetters && doc.DocumentStatus == (int)DocStatus.Pending).Count();
             }
         }
@@ -108,7 +108,7 @@ namespace CareerVisa.Controllers
             return NotAssignDocuments;
         }
 
-        public ViewResult Assign(string EncryptedDocumentId, string EncryptedOwnerId)
+        public PartialViewResult Assign(string EncryptedDocumentId, string EncryptedOwnerId)
         {
             GetAdminData();
             AssignedDocument DocumentToAssign = new AssignedDocument();
@@ -116,7 +116,12 @@ namespace CareerVisa.Controllers
             string DocumentId = EncryptionHelper.Decrypt(EncryptedDocumentId);
             string OwnerId = EncryptionHelper.Decrypt(EncryptedOwnerId);
 
-            return View();
+            DocumentToAssign.OwnerUserId = OwnerId;
+            DocumentToAssign.AssignedDate = DateTime.Now;
+            DocumentToAssign.AdministratorUserId = User.Identity.GetUserId();
+            DocumentToAssign.DocumentId = Int32.Parse(DocumentId);
+
+            return PartialView("_Reviewers", DocumentToAssign);
         }
 
     }

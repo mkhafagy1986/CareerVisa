@@ -14,6 +14,7 @@ namespace CareerVisa.Models.Entities
         public DateTime AssignedDate { get; set; }
         public string AdministratorUserId { get; set; }
         public int DocumentId { get; set; }
+        [Display(Name="Reviewer Name:")]
         public string ReviewerUserId { get; set; }
     }
 }

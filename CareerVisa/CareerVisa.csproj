@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44397</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -533,6 +534,7 @@
     <Content Include="Views\Administrators\Index.cshtml" />
     <Content Include="Views\Administrators\AssignCurriculumVitae.cshtml" />
     <Content Include="Views\Administrators\Assign.cshtml" />
+    <Content Include="Views\Administrators\_Reviewers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
