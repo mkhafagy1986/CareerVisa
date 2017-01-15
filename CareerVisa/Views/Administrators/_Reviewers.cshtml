@@ -28,16 +28,13 @@
 
                         ApplicationDbContext db = new ApplicationDbContext();
                         List<SelectListItem> ReviewersItems = new List<SelectListItem>();
-                        foreach (var user in db.Users)
+                        foreach (var user in db.Users.Where(u => u.Roles.Any(role => role.RoleId == "2")))
                         {
-                            if (user.Roles.Any(role => role.RoleId == "2"))
+                            ReviewersItems.Add(new SelectListItem
                             {
-                                ReviewersItems.Add(new SelectListItem
-                                {
-                                    Text = user.FirstName + " " + user.Lastname,
-                                    Value = user.Id
-                                });
-                            }
+                                Text = user.FirstName + " " + user.Lastname,
+                                Value = user.Id
+                            });
                         }
 
                     }
