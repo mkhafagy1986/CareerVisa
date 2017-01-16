@@ -14,29 +14,33 @@
     <div class="clearfix"></div>
 </div>
 <div class="clearfix"></div>
-<br/>
+<br />
 
 <p>
-    @Html.ActionLink(" Assign Selected", "AssignSelected", "Administrators", null, new {@class = "btn btn-primary btn-lg fa fa-link", data_target = "#modal-container", data_toggle = "modal"})
+    @using (Html.BeginForm())
+    {
+        @Html.ActionLink(" Assign Selected", "AssignSelected", "Administrators", null, new { @class = "btn btn-primary btn-lg fa fa-link", data_target = "#modal-container", data_toggle = "modal" })
+    }
 </p>
 
 <div class="code-cut">
+
     @Html.Grid(Model).Columns(columns =>
-{
-    columns.Add()
-         .Encoded(false)
-         .Sanitized(false)
-         .SetWidth(30)
-         .RenderValueAs(o => Html.CheckBox("checked", false));
-    columns.Add(c => c.DocumentOwnerUsername).Titled("Owner User Name.").SetWidth(200).Filterable(true);
-    columns.Add(c => c.DocumentDescription).Titled("CV Description").SetWidth(350);
-    columns.Add(c => c.DocumentUploadDate).Titled("CV Upload Date").SetWidth(100);
-    columns.Add(c => c.DocumentStatus).Titled("CV Status").SetWidth(100);
-    columns.Add()
-    .Encoded(false)
-    .Sanitized(false)
-    .SetWidth(30)
-    .RenderValueAs(o => Html.ActionLink(" Assign", "Assign", "Administrators", new { EncryptedDocumentId = o.DocumentId, EncryptedOwnerId = o.DocumentOwnerUserId }, new { @class = "fa fa-forward", data_target = "#modal-container", data_toggle = "modal" }));
-}).Sortable(true).WithPaging(10)
+   {
+       columns.Add()
+            .Encoded(false)
+            .Sanitized(false)
+            .SetWidth(30)
+            .RenderValueAs(o => Html.CheckBox("selectedDocument", false, new { name = "selectedDocument", value = o.DocumentId }));
+       columns.Add(c => c.DocumentOwnerUsername).Titled("Owner User Name.").SetWidth(200).Filterable(true);
+       columns.Add(c => c.DocumentDescription).Titled("CV Description").SetWidth(350);
+       columns.Add(c => c.DocumentUploadDate).Titled("CV Upload Date").SetWidth(100);
+       columns.Add(c => c.DocumentStatus).Titled("CV Status").SetWidth(100);
+       columns.Add()
+       .Encoded(false)
+       .Sanitized(false)
+       .SetWidth(30)
+       .RenderValueAs(o => Html.ActionLink(" Assign", "Assign", "Administrators", new { EncryptedDocumentId = o.DocumentId, EncryptedOwnerId = o.DocumentOwnerUserId }, new { @class = "fa fa-forward", data_target = "#modal-container", data_toggle = "modal" }));
+   }).Sortable(true).WithPaging(10)
 
 </div>
