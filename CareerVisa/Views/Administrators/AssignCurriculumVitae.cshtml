@@ -15,17 +15,16 @@
 </div>
 <div class="clearfix"></div>
 <br />
+@using (Html.BeginForm("SelectReviewer", "Administrators",FormMethod.Post, new { name = "frm", id = "frm" }))
+{
+    <p>
+        @*<input id="btnAssignSelected" type="button" name="AssignSelectedButton" value="Assign Selected" class="btn btn-primary btn-lg fa fa-link" data-target = "#modal-container", data-toggle = "modal"/>*@
+        @Html.ActionLink(" Assign Selected", "SelectReviewer", "Administrators", null, new { @class = "btn btn-primary btn-lg fa fa-link", data_target = "#modal-container", data_toggle = "modal", id = "btnAssignSelected" })
+    </p>
 
-<p>
-    @using (Html.BeginForm())
-    {
-        @Html.ActionLink(" Assign Selected", "AssignSelected", "Administrators", null, new { @class = "btn btn-primary btn-lg fa fa-link", data_target = "#modal-container", data_toggle = "modal" })
-    }
-</p>
+    <div class="code-cut">
 
-<div class="code-cut">
-
-    @Html.Grid(Model).Columns(columns =>
+        @Html.Grid(Model).Columns(columns =>
    {
        columns.Add()
             .Encoded(false)
@@ -43,4 +42,5 @@
        .RenderValueAs(o => Html.ActionLink(" Assign", "Assign", "Administrators", new { EncryptedDocumentId = o.DocumentId, EncryptedOwnerId = o.DocumentOwnerUserId }, new { @class = "fa fa-forward", data_target = "#modal-container", data_toggle = "modal" }));
    }).Sortable(true).WithPaging(10)
 
-</div>
+    </div>
+}

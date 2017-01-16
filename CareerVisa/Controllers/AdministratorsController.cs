@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -142,12 +143,15 @@ namespace CareerVisa.Controllers
             return RedirectToAction("AssignCurriculumVitae");
         }
 
+        //[HttpPost]
         [Authorize(Roles = "Administrators")]
-        public PartialViewResult AssignSelected(FormCollection form)
+        public PartialViewResult SelectReviewer(FormCollection form)
         {
             GetAdminData();
             AssignedDocument DocumentToAssign = new AssignedDocument();
             var selectedIds = form.GetValues("selectedDocument");
+            selectedIds = selectedIds.Where(id => id != "false").ToArray();
+            DocumentToAssign.AdministratorUserId = string.Join("#", selectedIds);
 
             return PartialView("_Reviewers", DocumentToAssign);
         }
@@ -156,13 +160,14 @@ namespace CareerVisa.Controllers
         [Authorize(Roles = "Administrators")]
         public ActionResult AssignSelected(FormCollection form, AssignedDocument DocumentToAssign)
         {
-            var selectedIds = form.GetValues("selectedDocument");
+            var StrselectedIds = DocumentToAssign.AdministratorUserId;
+            var selectedIds = StrselectedIds.Split('#');
             if (selectedIds != null)
             {
                 List<AssignedDocument> AssignedDocumentlist = new List<AssignedDocument>();
                 foreach (var id in selectedIds)
                 {
-                    var currentAssignedDocument = GetAssignedDocument(id);
+                    var currentAssignedDocument = GetAssignedDocument(EncryptionHelper.Decrypt(id));
                     currentAssignedDocument.ReviewerUserId = DocumentToAssign.ReviewerUserId;
                     AssignedDocumentlist.Add(currentAssignedDocument);
                 }
@@ -176,6 +181,7 @@ namespace CareerVisa.Controllers
             AssignedDocument DocumentToAssign = new AssignedDocument();
             using (var context = new ApplicationDbContext())
             {
+                context.Documents.Include("User");
                 var DocumentObject = context.Documents.Where(doc => doc.DocumentId.ToString() == DocumentId).First();
                 if(DocumentObject!=null)
                 {

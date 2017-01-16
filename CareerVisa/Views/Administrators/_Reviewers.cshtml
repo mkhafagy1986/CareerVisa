@@ -12,7 +12,7 @@
 <div>
     <br />
     <h2 style="padding-left: 20px;">Please Select Revewer</h2><br />
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("AssignSelected", "Administrators", FormMethod.Post, new { name = "frm", id = "frm" }))
     {
         @Html.AntiForgeryToken()
 
@@ -35,7 +35,7 @@
                         }
                     }
                     @Html.DropDownListFor(model => model.ReviewerUserId, ReviewersItems, "Select Reviewer", new { htmlAttributes = new { @class = "form-control", id = "reviewerid" } })
-                    @Html.ValidationMessageFor(model => model.ReviewerUserId, "", new { @class = "text-danger"})
+                    @Html.ValidationMessageFor(model => model.ReviewerUserId, "", new { @class = "text-danger" })
                 </div>
             </div>
             @Html.HiddenFor(model => model.OwnerUserId)
