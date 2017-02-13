@@ -26,7 +26,8 @@ namespace CareerVisa.Models
             }
             set
             {
-                _DocumentOwnerUserId = EncryptionHelper.Encrypt(value);
+                //_DocumentOwnerUserId = EncryptionHelper.Encrypt(value);
+                _DocumentOwnerUserId = value;
             }
         }
         public string DocumentId
@@ -38,7 +39,8 @@ namespace CareerVisa.Models
             }
             set
             {
-                _DocumentId = EncryptionHelper.Encrypt(value);
+                //_DocumentId = EncryptionHelper.Encrypt(value);
+                _DocumentId = value;
             }
         }
         public string DocumentDescription { get; set; }

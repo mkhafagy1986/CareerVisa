@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44397</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -283,6 +282,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobSeekerModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MultiNotAssignDocuments.cs" />
     <Compile Include="Models\OnlineUserViewModel.cs" />
     <Compile Include="Models\RegisterationViewModel.cs" />
     <Compile Include="Models\UsersCountViewModel.cs" />
@@ -535,6 +535,7 @@
     <Content Include="Views\Administrators\AssignCurriculumVitae.cshtml" />
     <Content Include="Views\Administrators\Assign.cshtml" />
     <Content Include="Views\Administrators\_Reviewers.cshtml" />
+    <Content Include="Views\Administrators\SelectReviewer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

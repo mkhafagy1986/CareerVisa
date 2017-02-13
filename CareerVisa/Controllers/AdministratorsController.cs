@@ -110,19 +110,46 @@ namespace CareerVisa.Controllers
             return NotAssignDocuments;
         }
 
+        public IEnumerable<NotAssignDocumentsViewModel> GetNotAssignDocuments(string[] SelectedDocumentIds)
+        {
+            IEnumerable<NotAssignDocumentsViewModel> NotAssignDocuments = new List<NotAssignDocumentsViewModel>();
+            using (var context = new ApplicationDbContext())
+            {
+                NotAssignDocuments = context.Documents.Select(
+                NotAssignDocument => new NotAssignDocumentsViewModel
+                {
+                    DocumentId = NotAssignDocument.DocumentId.ToString(),
+                    DocumentDescription = NotAssignDocument.DocumentDescription,
+                    AssignDate = DateTime.Now,
+                    DocumentOwnerUserId = NotAssignDocument.User.Id,
+                    DocumentOwnerUsername = NotAssignDocument.User.UserName,
+                    DocumentStatusId = NotAssignDocument.DocumentStatus,
+
+                    DocumentStatus = (NotAssignDocument.DocumentStatus == 1 ? DocStatus.Pending.ToString() : (NotAssignDocument.DocumentStatus == 2 ? DocStatus.Approved.ToString() : (NotAssignDocument.DocumentStatus == 3 ? DocStatus.Rejected.ToString() : (NotAssignDocument.DocumentStatus == 4 ? DocStatus.Assigned.ToString() : "")))),
+                    DocumentTypeId = NotAssignDocument.DocumentTypeId,
+                    DocumentType = (NotAssignDocument.DocumentTypeId == 1 ? DocType.CurriculumVitae.ToString() : (NotAssignDocument.DocumentTypeId == 2 ? DocType.CoverLetters.ToString() : (NotAssignDocument.DocumentTypeId == 3 ? DocType.EvaluationReport.ToString() : ""))),
+                    DocumentUploadDate = NotAssignDocument.UploadDate
+                }).Where(NotAssignDocument => SelectedDocumentIds.Contains(NotAssignDocument.DocumentId))
+                .ToList();
+            }
+            return NotAssignDocuments;
+        }
+
         [Authorize(Roles = "Administrators")]
         public PartialViewResult Assign(string EncryptedDocumentId, string EncryptedOwnerId)
         {
             GetAdminData();
             AssignedDocument DocumentToAssign = new AssignedDocument();
 
-            string DocumentId = EncryptionHelper.Decrypt(EncryptedDocumentId);
-            string OwnerId = EncryptionHelper.Decrypt(EncryptedOwnerId);
+            //string DocumentId = EncryptionHelper.Decrypt(EncryptedDocumentId);
+            //string OwnerId = EncryptionHelper.Decrypt(EncryptedOwnerId);
 
-            DocumentToAssign.OwnerUserId = OwnerId;
+            //DocumentToAssign.OwnerUserId = OwnerId;
+            DocumentToAssign.OwnerUserId = EncryptedOwnerId;
             DocumentToAssign.AssignedDate = DateTime.Now;
             DocumentToAssign.AdministratorUserId = User.Identity.GetUserId();
-            DocumentToAssign.DocumentId = Int32.Parse(DocumentId);
+            //DocumentToAssign.DocumentId = Int32.Parse(DocumentId);
+            DocumentToAssign.DocumentId = Int32.Parse(EncryptedDocumentId);
 
             return PartialView("_Reviewers", DocumentToAssign);
         }
@@ -131,60 +158,106 @@ namespace CareerVisa.Controllers
         [Authorize(Roles = "Administrators")]
         public ActionResult Assign(AssignedDocument DocumentToAssign)
         {
-            using (var context = new ApplicationDbContext())
-            {
-                context.AssignedDocuments.Add(DocumentToAssign);
-                var OrignalDocument = context.Documents.Where(doc => doc.DocumentId == DocumentToAssign.DocumentId).First();
-                OrignalDocument.DocumentStatus = (int)DocStatus.Assigned;
-
-                context.SaveChanges();
-            }
+            List<AssignedDocument> AssignedDocumentlist = new List<AssignedDocument>();
+            AssignedDocumentlist.Add(DocumentToAssign);
+            AssignDocuments(AssignedDocumentlist);
 
             return RedirectToAction("AssignCurriculumVitae");
         }
 
-        //[HttpPost]
-        [Authorize(Roles = "Administrators")]
-        public PartialViewResult SelectReviewer(FormCollection form)
+        private static void AssignDocuments(List<AssignedDocument> AssignedDocumentlist)
         {
-            GetAdminData();
-            AssignedDocument DocumentToAssign = new AssignedDocument();
-            var selectedIds = form.GetValues("selectedDocument");
-            selectedIds = selectedIds.Where(id => id != "false").ToArray();
-            DocumentToAssign.AdministratorUserId = string.Join("#", selectedIds);
+            foreach (var AssignedDocument in AssignedDocumentlist)
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    context.AssignedDocuments.Add(AssignedDocument);
+                    var OrignalDocument = context.Documents.Where(doc => doc.DocumentId == AssignedDocument.DocumentId).FirstOrDefault();
+                    OrignalDocument.DocumentStatus = (int)DocStatus.Assigned;
 
-            return PartialView("_Reviewers", DocumentToAssign);
+                    context.SaveChanges();
+                }
+            }
+
         }
 
         [HttpPost]
         [Authorize(Roles = "Administrators")]
-        public ActionResult AssignSelected(FormCollection form, AssignedDocument DocumentToAssign)
+        public ActionResult AssignCurriculumVitae(FormCollection form)
         {
-            var StrselectedIds = DocumentToAssign.AdministratorUserId;
-            var selectedIds = StrselectedIds.Split('#');
-            if (selectedIds != null)
-            {
-                List<AssignedDocument> AssignedDocumentlist = new List<AssignedDocument>();
-                foreach (var id in selectedIds)
-                {
-                    var currentAssignedDocument = GetAssignedDocument(EncryptionHelper.Decrypt(id));
-                    currentAssignedDocument.ReviewerUserId = DocumentToAssign.ReviewerUserId;
-                    AssignedDocumentlist.Add(currentAssignedDocument);
-                }
-            }
+            GetAdminData();
+            IEnumerable<NotAssignDocumentsViewModel> NotAssignDocumentsViewModel = new List<NotAssignDocumentsViewModel>();
+            var selectedIds = form.GetValues("selectedDocument");
+            selectedIds = selectedIds.Where(id => id != "false").ToArray();
 
+            if (selectedIds != null)
+                NotAssignDocumentsViewModel = GetNotAssignDocuments(selectedIds);
+
+            MultiNotAssignDocuments MultiNotAssignDocuments = new MultiNotAssignDocuments();
+            MultiNotAssignDocuments.NotAssignDocumentsViewModel = NotAssignDocumentsViewModel;
+            MultiNotAssignDocuments.AssignedDocument = new AssignedDocument();
+
+            return View("SelectReviewer", NotAssignDocumentsViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrators")]
+        public ActionResult SelectReviewer(MultiNotAssignDocuments MultiNotAssignDocuments)
+        {
+            GetAdminData();
+            var NotAssignDocumentsViewModel = MultiNotAssignDocuments.NotAssignDocumentsViewModel;
+            List<AssignedDocument> AssignedDocumentlist = new List<AssignedDocument>();
+            foreach (var NotAssignedDocument in NotAssignDocumentsViewModel)
+            {
+                var currentAssignedDocument = GetAssignedDocument(Int32.Parse(NotAssignedDocument.DocumentId));
+                currentAssignedDocument.ReviewerUserId = MultiNotAssignDocuments.AssignedDocument.ReviewerUserId;
+                AssignedDocumentlist.Add(currentAssignedDocument);
+            }
+            AssignDocuments(AssignedDocumentlist);
             return RedirectToAction("AssignCurriculumVitae");
         }
 
-        public AssignedDocument GetAssignedDocument(string DocumentId)
+        //[HttpPost]
+        //[Authorize(Roles = "Administrators")]
+        //public ActionResult AssignSelected(FormCollection form, AssignedDocument DocumentToAssign)
+        //{
+        //    List<AssignedDocument> AssignedDocumentlist = new List<AssignedDocument>();
+        //    var StrselectedIds = DocumentToAssign.AdministratorUserId;
+        //    if (StrselectedIds.Contains('#'))
+        //    {
+        //        var selectedIds = StrselectedIds.Split('#');
+        //        if (selectedIds != null)
+        //        {
+        //            foreach (var id in selectedIds)
+        //            {
+        //                var currentAssignedDocument = GetAssignedDocument(Int32.Parse(id));
+        //                //var currentAssignedDocument = GetAssignedDocument(EncryptionHelper.Decrypt(id));
+        //                currentAssignedDocument.ReviewerUserId = DocumentToAssign.ReviewerUserId;
+        //                AssignedDocumentlist.Add(currentAssignedDocument);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var currentAssignedDocument = GetAssignedDocument(DocumentToAssign.DocumentId);
+        //        //var currentAssignedDocument = GetAssignedDocument(EncryptionHelper.Decrypt(id));
+        //        currentAssignedDocument.ReviewerUserId = DocumentToAssign.ReviewerUserId;
+        //        AssignedDocumentlist.Add(currentAssignedDocument);
+        //    }
+
+        //    AssignDocuments(AssignedDocumentlist);
+        //    return RedirectToAction("AssignCurriculumVitae");
+        //}
+
+        public AssignedDocument GetAssignedDocument(int DocumentId)
         {
             AssignedDocument DocumentToAssign = new AssignedDocument();
             using (var context = new ApplicationDbContext())
             {
-                context.Documents.Include("User");
-                var DocumentObject = context.Documents.Where(doc => doc.DocumentId.ToString() == DocumentId).First();
-                if(DocumentObject!=null)
+                var DocumentObject = context.Documents.Where(doc => doc.DocumentId == DocumentId).Include("User").FirstOrDefault();
+                if (DocumentObject != null)
                 {
+
                     DocumentToAssign.OwnerUserId = DocumentObject.User.Id;
                     DocumentToAssign.AssignedDate = DateTime.Now;
                     DocumentToAssign.AdministratorUserId = User.Identity.GetUserId();
@@ -193,5 +266,7 @@ namespace CareerVisa.Controllers
             }
             return DocumentToAssign;
         }
+
+        
     }
 }

@@ -12,7 +12,7 @@
 <div>
     <br />
     <h2 style="padding-left: 20px;">Please Select Revewer</h2><br />
-    @using (Html.BeginForm("AssignSelected", "Administrators", FormMethod.Post, new { name = "frm", id = "frm" }))
+    @using (Html.BeginForm("Assign", "Administrators", FormMethod.Post, new { name = "frm", id = "frm" }))
     {
         @Html.AntiForgeryToken()
 

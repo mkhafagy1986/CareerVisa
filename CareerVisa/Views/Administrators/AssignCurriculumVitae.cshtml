@@ -15,11 +15,11 @@
 </div>
 <div class="clearfix"></div>
 <br />
-@using (Html.BeginForm("SelectReviewer", "Administrators",FormMethod.Post, new { name = "frm", id = "frm" }))
+@using (Html.BeginForm("AssignCurriculumVitae", "Administrators",FormMethod.Post, new { name = "frm", id = "frm" }))
 {
     <p>
-        @*<input id="btnAssignSelected" type="button" name="AssignSelectedButton" value="Assign Selected" class="btn btn-primary btn-lg fa fa-link" data-target = "#modal-container", data-toggle = "modal"/>*@
-        @Html.ActionLink(" Assign Selected", "SelectReviewer", "Administrators", null, new { @class = "btn btn-primary btn-lg fa fa-link", data_target = "#modal-container", data_toggle = "modal", id = "btnAssignSelected" })
+        <input id="btnAssignSelected" type="button" name="AssignSelectedButton" value="Assign Selected" class="btn btn-primary btn-lg fa fa-link" data-target = "#modal-container", data-toggle = "modal"/>
+        @*@Html.ActionLink(" Assign Selected", "SelectReviewer", "Administrators", null, new { @class = "btn btn-primary btn-lg fa fa-link", id = "btnAssignSelected" })*@
     </p>
 
     <div class="code-cut">
