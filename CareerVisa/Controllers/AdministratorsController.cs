@@ -197,7 +197,7 @@ namespace CareerVisa.Controllers
             MultiNotAssignDocuments.NotAssignDocumentsViewModel = NotAssignDocumentsViewModel;
             MultiNotAssignDocuments.AssignedDocument = new AssignedDocument();
 
-            return View("SelectReviewer", NotAssignDocumentsViewModel);
+            return View("SelectReviewer", MultiNotAssignDocuments);
         }
 
         [HttpPost]
