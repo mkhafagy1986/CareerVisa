@@ -21,3 +21,18 @@
     max-height: 600px;
     max-width: 600px;
 }
+
+.roundeddiv {
+    border: 2px solid #e6e9ed;
+    padding: 10px 40px; 
+    /*background: #dddddd;*/
+    /*width: 300px;*/
+    border-radius: 25px;
+    min-height: 75px;
+}
+
+#reviewerid {
+  border-radius: 10px;
+  background: #e6e9ed;
+  width: 300px;
+}

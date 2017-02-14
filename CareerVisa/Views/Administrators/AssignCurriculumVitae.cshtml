@@ -1,7 +1,8 @@
-﻿@model IEnumerable<CareerVisa.Models.NotAssignDocumentsViewModel>
+﻿@model CareerVisa.Models.MultiNotAssignDocuments
 @using GridMvc.Html
 @using CareerVisa.App_Start
 @using System.Configuration
+@using CareerVisa.Models
 
 @{
     ViewBag.AdministratorDashBoardTitle = "Career Visa - Administrator - Assign Curriculum Vitae";
@@ -15,32 +16,66 @@
 </div>
 <div class="clearfix"></div>
 <br />
-@using (Html.BeginForm("AssignCurriculumVitae", "Administrators",FormMethod.Post, new { name = "frm", id = "frm" }))
+@using (Html.BeginForm("AssignCurriculumVitae", "Administrators", FormMethod.Post, new { name = "frm", id = "frm" }))
 {
-    <p>
-        <input id="btnAssignSelected" type="button" name="AssignSelectedButton" value="Assign Selected" class="btn btn-primary btn-lg fa fa-link"/>
-        @*@Html.ActionLink(" Assign Selected", "SelectReviewer", "Administrators", null, new { @class = "btn btn-primary btn-lg fa fa-link", id = "btnAssignSelected" })*@
-    </p>
+    @*<p>
+            <input id="btnAssignSelected" type="button" name="AssignSelectedButton" value="Assign Selected" class="btn btn-primary btn-lg fa fa-link"/>
+            @Html.ActionLink(" Assign Selected", "SelectReviewer", "Administrators", null, new { @class = "btn btn-primary btn-lg fa fa-link", id = "btnAssignSelected" })
+        </p>*@
 
     <div class="code-cut">
 
-        @Html.Grid(Model).Columns(columns =>
+        @Html.Grid(Model.NotAssignDocumentsViewModel).Columns(columns =>
    {
        columns.Add()
-            .Encoded(false)
-            .Sanitized(false)
-            .SetWidth(30)
-            .RenderValueAs(o => Html.CheckBox("selectedDocument", false, new { name = "selectedDocument", value = o.DocumentId }));
+           .Encoded(false)
+           .Sanitized(false)
+           .SetWidth(30)
+           .RenderValueAs(o => Html.CheckBox("selectedDocument", false, new { name = "selectedDocument", value = o.DocumentId }));
        columns.Add(c => c.DocumentOwnerUsername).Titled("Owner User Name.").SetWidth(200).Filterable(true);
        columns.Add(c => c.DocumentDescription).Titled("CV Description").SetWidth(350);
        columns.Add(c => c.DocumentUploadDate).Titled("CV Upload Date").SetWidth(100);
        columns.Add(c => c.DocumentStatus).Titled("CV Status").SetWidth(100);
        columns.Add()
-       .Encoded(false)
-       .Sanitized(false)
-       .SetWidth(30)
-       .RenderValueAs(o => Html.ActionLink(" Assign", "Assign", "Administrators", new { EncryptedDocumentId = o.DocumentId, EncryptedOwnerId = o.DocumentOwnerUserId }, new { @class = "fa fa-forward", data_target = "#modal-container", data_toggle = "modal" }));
+           .Encoded(false)
+           .Sanitized(false)
+           .SetWidth(30)
+           .RenderValueAs(o => Html.ActionLink(" Assign", "Assign", "Administrators", new { EncryptedDocumentId = o.DocumentId, EncryptedOwnerId = o.DocumentOwnerUserId }, new { @class = "fa fa-forward", data_target = "#modal-container", data_toggle = "modal" }));
    }).Sortable(true).WithPaging(10)
 
     </div>
+
+    <div class="x_title">
+
+        <div class="clearfix"></div>
+    </div>
+        <div class="clearfix"></div>
+    <br/>
+
+    <div class="row roundeddiv">
+        <div class="form-group  wow fadeInDown animated">
+            <h2>@Html.LabelFor(model => model.AssignedDocument.ReviewerUserId, htmlAttributes: new { @class = "control-label col-md-3" })</h2>
+            <div class="col-md-5">
+                @{
+                    ApplicationDbContext db = new ApplicationDbContext();
+                    List<SelectListItem> ReviewersItems = new List<SelectListItem>();
+                    foreach (var user in db.Users.Where(u => u.Roles.Any(role => role.RoleId == "2")))
+                    {
+                        ReviewersItems.Add(new SelectListItem
+                        {
+                            Text = user.FirstName + " " + user.Lastname,
+                            Value = user.Id
+                        });
+                    }
+                }
+                @Html.DropDownListFor(model => model.AssignedDocument.ReviewerUserId, ReviewersItems, "Select Reviewer", new {htmlAttributes = new { id = "reviewerid"}})
+                @Html.ValidationMessageFor(model => model.AssignedDocument.ReviewerUserId, "", new {@class = "text-danger"})
+            </div>
+
+            <p class="col-md-4">
+                <input id="btnAssignSelected" type="button" name="AssignSelectedButton" value="Assign Selected" class="btn btn-primary btn-md fa fa-link" />
+            </p>
+        </div>
+    </div>
+    
 }
